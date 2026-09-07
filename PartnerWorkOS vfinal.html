@@ -1,0 +1,1955 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PartnerWork Dashboard AI</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#F5F5F1;
+  --surface:#FFFFFF;
+  --surface-2:#FAFAF7;
+  --border:#E6E4DD;
+  --border-soft:#EEEDE7;
+  --text:#181A19;
+  --text-2:#63665F;
+  --text-3:#9A9C94;
+  --accent:#1F5A46;
+  --accent-ink:#153F32;
+  --accent-soft:#E7F0EC;
+  --gold:#9C7A29;
+  --gold-soft:#F5EEDC;
+  --critical:#AE4030;
+  --critical-soft:#F8E9E5;
+  --high:#9C7A29;
+  --high-soft:#F5EEDC;
+  --medium:#57606B;
+  --medium-soft:#EEF0F1;
+  --low:#8B8D86;
+  --low-soft:#EFEFEA;
+  --radius-lg:18px;
+  --radius-md:12px;
+  --radius-sm:8px;
+  --shadow-sm:0 1px 2px rgba(24,26,25,.04);
+  --shadow-md:0 2px 6px rgba(24,26,25,.05), 0 12px 28px -16px rgba(24,26,25,.14);
+  --serif:'Fraunces', Georgia, serif;
+  --sans:'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  --mono:'IBM Plex Mono', monospace;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html,body{height:100%;}
+body{
+  font-family:var(--sans);
+  background:var(--bg);
+  color:var(--text);
+  font-size:14px;
+  line-height:1.5;
+  -webkit-font-smoothing:antialiased;
+}
+button{font-family:inherit;font-size:inherit;cursor:pointer;}
+input,textarea,select{font-family:inherit;font-size:inherit;}
+a{color:inherit;text-decoration:none;}
+::selection{background:var(--accent-soft);}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px;}
+
+/* ---------- Login ---------- */
+#login-screen{
+  min-height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:
+    radial-gradient(circle at 15% 20%, rgba(31,90,70,.07), transparent 45%),
+    radial-gradient(circle at 85% 80%, rgba(156,122,41,.08), transparent 45%),
+    var(--bg);
+  padding:32px;
+}
+.login-card{
+  width:100%;
+  max-width:860px;
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:24px;
+  box-shadow:var(--shadow-md);
+  padding:56px 56px 44px;
+}
+.brand-mark{
+  display:flex;align-items:center;gap:10px;margin-bottom:36px;
+}
+.brand-mark .dot{width:9px;height:9px;border-radius:50%;background:var(--accent);}
+.brand-mark span{font-family:var(--mono);font-size:12px;letter-spacing:.08em;color:var(--text-2);}
+.login-title{
+  font-family:var(--serif);
+  font-weight:500;
+  font-size:40px;
+  line-height:1.08;
+  letter-spacing:-.01em;
+  color:var(--text);
+}
+.login-title em{font-style:italic;color:var(--accent);}
+.login-tagline{
+  margin-top:12px;
+  color:var(--text-2);
+  font-size:15px;
+  max-width:420px;
+}
+.login-divider{height:1px;background:var(--border);margin:32px 0 24px;}
+.login-sub{font-size:12px;color:var(--text-3);text-transform:uppercase;letter-spacing:.06em;margin-bottom:16px;}
+.demo-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill, minmax(240px,1fr));
+  gap:12px;
+}
+.demo-user{
+  display:flex;align-items:center;gap:12px;
+  padding:14px;
+  border:1px solid var(--border);
+  border-radius:var(--radius-md);
+  background:var(--surface-2);
+  text-align:left;
+  transition:border-color .15s, background .15s, transform .1s;
+}
+.demo-user:hover{border-color:var(--accent);background:#fff;transform:translateY(-1px);}
+.avatar{
+  width:38px;height:38px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-weight:600;font-size:13px;color:#fff;flex-shrink:0;
+}
+.demo-user .meta{min-width:0;}
+.demo-user .name{font-weight:600;font-size:13.5px;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.demo-user .role{font-size:12px;color:var(--text-2);}
+
+/* ---------- Auth (track select + email/password) ---------- */
+.track-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+@media (max-width:640px){.track-grid{grid-template-columns:1fr;}}
+.track-card{
+  text-align:left;border:1px solid var(--border);border-radius:var(--radius-lg);
+  padding:22px;background:var(--surface-2);transition:border-color .15s, background .15s, transform .1s;
+}
+.track-card:hover{border-color:var(--accent);background:#fff;transform:translateY(-2px);}
+.track-card .tc-icon{width:38px;height:38px;border-radius:10px;background:var(--accent-soft);color:var(--accent-ink);display:flex;align-items:center;justify-content:center;margin-bottom:14px;}
+.track-card .tc-icon svg{width:18px;height:18px;}
+.track-card .tc-title{font-family:var(--serif);font-size:18px;font-weight:500;margin-bottom:4px;}
+.track-card .tc-sub{font-size:12.5px;color:var(--text-2);}
+.hr-link{display:block;text-align:center;margin-top:22px;font-size:12px;color:var(--text-3);border-bottom:1px dotted var(--text-3);width:fit-content;margin-left:auto;margin-right:auto;}
+.hr-link:hover{color:var(--accent);}
+.back-link{display:inline-flex;align-items:center;gap:4px;font-size:12.5px;color:var(--text-2);margin-bottom:18px;}
+.back-link:hover{color:var(--accent);}
+.auth-track-badge{display:inline-flex;align-items:center;gap:6px;background:var(--accent-soft);color:var(--accent-ink);font-size:11.5px;font-weight:700;padding:4px 10px;border-radius:20px;margin-bottom:16px;}
+.field-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+@media (max-width:560px){.field-row{grid-template-columns:1fr;}}
+.field-error{border-color:var(--critical) !important;}
+.error-text{color:var(--critical);font-size:11.5px;margin-top:5px;display:none;}
+.error-text.show{display:block;}
+.form-alert{background:var(--critical-soft);color:var(--critical);font-size:12.5px;padding:10px 12px;border-radius:var(--radius-sm);margin-bottom:14px;display:none;}
+.form-alert.show{display:block;}
+.auth-toggle{font-size:12.5px;color:var(--text-2);margin-top:16px;text-align:center;}
+.auth-toggle a{color:var(--accent-ink);font-weight:600;border-bottom:1px dotted var(--accent);}
+
+/* ---------- App shell ---------- */
+#app-screen{display:none;height:100vh;overflow:hidden;}
+.shell{display:flex;height:100vh;}
+.sidebar{
+  width:222px;flex-shrink:0;
+  background:var(--surface);
+  border-right:1px solid var(--border);
+  display:flex;flex-direction:column;
+  padding:18px 12px;
+}
+.sidebar-brand{display:flex;align-items:center;gap:8px;padding:6px 8px 18px;}
+.sidebar-brand .dot{width:8px;height:8px;border-radius:50%;background:var(--accent);}
+.sidebar-brand .word{font-family:var(--serif);font-weight:500;font-size:15px;}
+.sidebar-brand .word b{color:var(--accent);font-style:italic;}
+.nav-group{display:flex;flex-direction:column;gap:2px;flex:1;overflow-y:auto;}
+.nav-item{
+  display:flex;align-items:center;gap:10px;
+  padding:9px 10px;border-radius:var(--radius-sm);
+  color:var(--text-2);font-size:13.5px;font-weight:500;
+  border:1px solid transparent;
+}
+.nav-item svg{width:16px;height:16px;flex-shrink:0;}
+.nav-item:hover{background:var(--surface-2);color:var(--text);}
+.nav-item.active{background:var(--accent-soft);color:var(--accent-ink);}
+.nav-item .badge{
+  margin-left:auto;background:var(--critical);color:#fff;
+  font-size:10px;font-weight:700;border-radius:10px;padding:1px 6px;
+}
+.sidebar-foot{border-top:1px solid var(--border-soft);padding-top:12px;margin-top:8px;}
+
+.main-col{flex:1;display:flex;flex-direction:column;min-width:0;}
+.topbar{
+  height:58px;flex-shrink:0;
+  display:flex;align-items:center;gap:14px;
+  padding:0 24px;border-bottom:1px solid var(--border);
+  background:var(--surface);
+  position:relative;z-index:20;
+}
+.breadcrumb{font-size:12px;color:var(--text-3);}
+.search-wrap{flex:1;max-width:420px;position:relative;}
+.search-wrap input{
+  width:100%;padding:8px 12px 8px 32px;border:1px solid var(--border);
+  border-radius:var(--radius-sm);background:var(--surface-2);color:var(--text);
+}
+.search-wrap input:focus{background:#fff;}
+.search-wrap svg{position:absolute;left:10px;top:50%;transform:translateY(-50%);width:14px;height:14px;color:var(--text-3);}
+.search-results{
+  position:absolute;top:calc(100% + 6px);left:0;right:0;
+  background:#fff;border:1px solid var(--border);border-radius:var(--radius-md);
+  box-shadow:var(--shadow-md);max-height:360px;overflow-y:auto;display:none;
+}
+.search-results.show{display:block;}
+.sr-group-label{padding:8px 12px 4px;font-size:10.5px;text-transform:uppercase;letter-spacing:.05em;color:var(--text-3);}
+.sr-item{padding:8px 12px;font-size:13px;border-top:1px solid var(--border-soft);}
+.sr-item:hover{background:var(--surface-2);}
+.sr-item .t{font-weight:600;}
+.sr-item .s{color:var(--text-2);font-size:12px;}
+.topbar-spacer{flex:1;}
+.icon-btn{
+  width:34px;height:34px;border-radius:var(--radius-sm);border:1px solid transparent;
+  background:transparent;display:flex;align-items:center;justify-content:center;
+  color:var(--text-2);position:relative;
+}
+.icon-btn:hover{background:var(--surface-2);color:var(--text);}
+.icon-btn svg{width:17px;height:17px;}
+.icon-btn .dot{position:absolute;top:6px;right:6px;width:7px;height:7px;border-radius:50%;background:var(--critical);border:1.5px solid #fff;}
+.ai-shortcut{
+  display:flex;align-items:center;gap:6px;padding:7px 12px;border-radius:20px;
+  background:var(--gold-soft);color:var(--gold);font-weight:600;font-size:12.5px;border:1px solid transparent;
+}
+.ai-shortcut:hover{border-color:var(--gold);}
+.ai-shortcut svg{width:13px;height:13px;}
+.topbar-user{display:flex;align-items:center;gap:8px;padding-left:10px;border-left:1px solid var(--border);}
+.topbar-user .name{font-size:12.5px;font-weight:600;}
+.topbar-user .role{font-size:11px;color:var(--text-2);}
+.switch-link{font-size:11.5px;color:var(--text-3);border-bottom:1px dotted var(--text-3);}
+.switch-link:hover{color:var(--accent);}
+
+.content{flex:1;overflow-y:auto;padding:28px 32px 64px;}
+.content-inner{max-width:1280px;margin:0 auto;}
+
+/* ---------- Typography helpers ---------- */
+.page-eyebrow{font-size:12px;color:var(--text-3);margin-bottom:4px;}
+.page-title{font-family:var(--serif);font-weight:500;font-size:26px;letter-spacing:-.01em;}
+.page-sub{color:var(--text-2);font-size:14px;margin-top:4px;}
+.page-head{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;margin-bottom:24px;flex-wrap:wrap;}
+
+/* ---------- Cards / grid ---------- */
+.grid{display:grid;gap:16px;}
+.grid-3{grid-template-columns:repeat(3,1fr);}
+.grid-2{grid-template-columns:2fr 1fr;}
+.grid-2e{grid-template-columns:1fr 1fr;}
+@media (max-width:1000px){.grid-3,.grid-2,.grid-2e{grid-template-columns:1fr;}}
+.card{
+  background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);
+  padding:20px;box-shadow:var(--shadow-sm);
+}
+.card-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;}
+.card-title{font-size:13px;font-weight:600;color:var(--text-2);text-transform:none;letter-spacing:0;}
+.card-stat{font-family:var(--serif);font-size:32px;font-weight:500;line-height:1;}
+.card-stat-label{font-size:12.5px;color:var(--text-2);margin-top:4px;}
+.ai-card{background:linear-gradient(180deg, var(--gold-soft), #fff 60%);border-color:#EADFC0;}
+.btn{
+  display:inline-flex;align-items:center;gap:6px;
+  padding:7px 13px;border-radius:var(--radius-sm);border:1px solid var(--border);
+  background:#fff;color:var(--text);font-weight:600;font-size:12.5px;
+}
+.btn:hover{border-color:var(--text-3);}
+.btn-primary{background:var(--accent);border-color:var(--accent);color:#fff;}
+.btn-primary:hover{background:var(--accent-ink);}
+.btn-ghost{border-color:transparent;background:transparent;color:var(--text-2);}
+.btn-ghost:hover{background:var(--surface-2);color:var(--text);}
+.btn-danger{color:var(--critical);}
+.btn-sm{padding:5px 10px;font-size:12px;}
+.btn-block{width:100%;justify-content:center;}
+.btn[disabled]{opacity:.45;pointer-events:none;}
+
+.pill{
+  display:inline-flex;align-items:center;gap:4px;padding:2px 9px;border-radius:20px;
+  font-size:11px;font-weight:700;letter-spacing:.02em;
+}
+.pill-critical{background:var(--critical-soft);color:var(--critical);}
+.pill-high{background:var(--high-soft);color:var(--high);}
+.pill-medium{background:var(--medium-soft);color:var(--medium);}
+.pill-low{background:var(--low-soft);color:var(--low);}
+.pill-status{background:var(--surface-2);color:var(--text-2);border:1px solid var(--border);}
+.pill-ai{background:var(--gold-soft);color:var(--gold);}
+
+.list-row{display:flex;align-items:center;gap:12px;padding:11px 0;border-top:1px solid var(--border-soft);}
+.list-row:first-child{border-top:none;padding-top:0;}
+.list-row:last-child{padding-bottom:0;}
+.row-main{min-width:0;flex:1;}
+.row-title{font-weight:600;font-size:13.5px;}
+.row-sub{font-size:12px;color:var(--text-2);margin-top:2px;}
+.row-time{font-size:11.5px;color:var(--text-3);font-family:var(--mono);white-space:nowrap;}
+
+.empty-state{
+  text-align:center;padding:34px 20px;color:var(--text-2);font-size:13.5px;
+}
+.empty-state .big{font-family:var(--serif);font-size:17px;color:var(--text);margin-bottom:4px;}
+
+.progress-track{height:6px;border-radius:6px;background:var(--surface-2);overflow:hidden;border:1px solid var(--border-soft);}
+.progress-fill{height:100%;background:var(--accent);border-radius:6px;}
+
+.avatars-row{display:flex;align-items:center;}
+.avatars-row .avatar{width:26px;height:26px;font-size:10.5px;border:2px solid #fff;margin-left:-8px;}
+.avatars-row .avatar:first-child{margin-left:0;}
+
+/* Timeline */
+.timeline{position:relative;padding-left:20px;}
+.timeline::before{content:"";position:absolute;left:5px;top:4px;bottom:4px;width:1px;background:var(--border);}
+.tl-item{position:relative;padding-bottom:20px;}
+.tl-item:last-child{padding-bottom:0;}
+.tl-item::before{content:"";position:absolute;left:-20px;top:3px;width:9px;height:9px;border-radius:50%;background:var(--accent);border:2px solid #fff;box-shadow:0 0 0 1px var(--border);}
+.tl-date{font-family:var(--mono);font-size:11px;color:var(--text-3);}
+.tl-text{font-size:13.5px;margin-top:2px;font-weight:500;}
+.tl-note{font-size:12.5px;color:var(--text-2);margin-top:2px;}
+
+/* Tabs */
+.tabs{display:flex;gap:4px;border-bottom:1px solid var(--border);margin-bottom:20px;}
+.tab-btn{padding:10px 4px;margin-right:18px;color:var(--text-2);font-weight:600;font-size:13px;border-bottom:2px solid transparent;position:relative;top:1px;}
+.tab-btn.active{color:var(--accent-ink);border-color:var(--accent);}
+
+/* Forms */
+.field{margin-bottom:14px;}
+.field label{display:block;font-size:12px;font-weight:600;color:var(--text-2);margin-bottom:6px;}
+.field textarea, .field input[type=text], .field select{
+  width:100%;padding:10px 12px;border:1px solid var(--border);border-radius:var(--radius-sm);
+  background:var(--surface-2);color:var(--text);
+}
+.field textarea{min-height:88px;resize:vertical;}
+.field textarea:focus,.field input:focus,.field select:focus{background:#fff;}
+.hint{font-size:11.5px;color:var(--text-3);margin-top:5px;}
+
+/* Kanban / task board */
+.board{display:grid;grid-template-columns:repeat(5,1fr);gap:14px;overflow-x:auto;}
+.board-col{background:var(--surface-2);border:1px solid var(--border-soft);border-radius:var(--radius-md);padding:12px;min-height:120px;transition:background .12s, border-color .12s;}
+.board-col.drag-over{background:var(--accent-soft);border-color:var(--accent);}
+.board-col-head{display:flex;justify-content:space-between;align-items:center;font-size:11.5px;font-weight:700;text-transform:uppercase;letter-spacing:.04em;color:var(--text-2);margin-bottom:10px;}
+.task-chip{background:#fff;border:1px solid var(--border);border-radius:var(--radius-sm);padding:10px;margin-bottom:8px;box-shadow:var(--shadow-sm);cursor:grab;}
+.task-chip.dragging{opacity:.4;}
+.task-chip:active{cursor:grabbing;}
+.task-chip .row-title{font-size:12.5px;}
+.task-chip .row-sub{font-size:11px;}
+
+/* Modal */
+.modal-backdrop{
+  position:fixed;inset:0;background:rgba(20,20,18,.42);display:none;
+  align-items:center;justify-content:center;z-index:100;padding:24px;
+}
+.modal-backdrop.show{display:flex;}
+.modal{
+  background:#fff;border-radius:var(--radius-lg);width:100%;max-width:560px;
+  max-height:88vh;overflow-y:auto;box-shadow:var(--shadow-md);
+}
+.modal-head{padding:20px 22px;border-bottom:1px solid var(--border-soft);display:flex;justify-content:space-between;align-items:flex-start;}
+.modal-title{font-family:var(--serif);font-size:19px;font-weight:500;}
+.modal-body{padding:22px;}
+.modal-foot{padding:16px 22px;border-top:1px solid var(--border-soft);display:flex;justify-content:flex-end;gap:8px;}
+.close-x{color:var(--text-3);font-size:18px;line-height:1;padding:2px 6px;}
+.close-x:hover{color:var(--text);}
+
+.kv{display:flex;justify-content:space-between;padding:7px 0;border-top:1px solid var(--border-soft);font-size:12.5px;}
+.kv:first-child{border-top:none;}
+.kv .k{color:var(--text-2);}
+.kv .v{font-weight:600;text-align:right;}
+
+.toast-wrap{position:fixed;bottom:20px;right:20px;z-index:200;display:flex;flex-direction:column;gap:8px;}
+.toast{background:var(--text);color:#fff;padding:11px 16px;border-radius:var(--radius-sm);font-size:12.5px;font-weight:500;box-shadow:var(--shadow-md);opacity:0;transform:translateY(6px);transition:all .2s;}
+.toast.show{opacity:1;transform:translateY(0);}
+
+.ai-note{border-left:2px solid var(--gold);background:var(--gold-soft);padding:10px 12px;border-radius:0 var(--radius-sm) var(--radius-sm) 0;font-size:12.5px;color:#6B551D;margin-bottom:10px;}
+.ai-note b{color:var(--gold);}
+
+.matter-card{border:1px solid var(--border);border-radius:var(--radius-lg);padding:18px;background:#fff;box-shadow:var(--shadow-sm);}
+.matter-card:hover{border-color:var(--text-3);}
+
+.chat-msg{max-width:78%;padding:10px 13px;border-radius:14px;font-size:13.5px;margin-bottom:10px;line-height:1.5;}
+.chat-msg.user{background:var(--accent);color:#fff;margin-left:auto;border-bottom-right-radius:4px;}
+.chat-msg.ai{background:var(--surface-2);border:1px solid var(--border-soft);border-bottom-left-radius:4px;}
+.chat-msg.ai b{color:var(--accent-ink);}
+
+.step-item{display:flex;gap:12px;padding:10px 0;border-top:1px solid var(--border-soft);}
+.step-item:first-child{border-top:none;}
+.step-check{width:20px;height:20px;border-radius:6px;border:1.5px solid var(--border);flex-shrink:0;margin-top:1px;display:flex;align-items:center;justify-content:center;}
+.step-check.done{background:var(--accent);border-color:var(--accent);color:#fff;}
+.step-title.done{text-decoration:line-through;color:var(--text-3);}
+
+::-webkit-scrollbar{width:9px;height:9px;}
+::-webkit-scrollbar-thumb{background:#DAD8D0;border-radius:6px;border:2px solid var(--bg);}
+::-webkit-scrollbar-track{background:transparent;}
+</style>
+</head>
+<body>
+
+<!-- ===================== LOGIN ===================== -->
+<div id="login-screen">
+  <div class="login-card">
+    <div class="brand-mark"><div class="dot"></div><span>PARTNERWORK &nbsp;·&nbsp; DASHBOARD AI</span></div>
+    <div class="login-title">Nothing important<br><em>falls through the cracks.</em></div>
+    <p class="login-tagline">The execution and accountability operating system for modern law firms — connecting instructions, people, matters and evidence into one workflow.</p>
+    <div class="login-divider"></div>
+
+    <!-- STEP 1: choose track -->
+    <div id="step-landing">
+      <div class="login-sub">Create an account</div>
+      <div class="track-grid">
+        <button class="track-card" onclick="showAuth('partner')">
+          <div class="tc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 7h16v12H4z"/><path d="M9 7V5a2 2 0 012-2h2a2 2 0 012 2v2"/><path d="M4 12h16"/></svg></div>
+          <div class="tc-title">Partner login</div>
+          <div class="tc-sub">Full firm visibility — assign work, verify submissions, approve handovers and view operational risk.</div>
+        </button>
+        <button class="track-card" onclick="showAuth('associate')">
+          <div class="tc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M8 12l3 3 5-6"/></svg></div>
+          <div class="tc-title">Associate &amp; intern login</div>
+          <div class="tc-sub">Your assigned work only — execute tasks, submit proof of work and track deadlines on authorized matters.</div>
+        </button>
+      </div>
+      <a class="hr-link" href="#" onclick="event.preventDefault();showAuth('hr')">Firm administrator / HR access</a>
+      <div class="auth-toggle" style="margin-top:18px;">Already have an account? <a href="#" onclick="event.preventDefault();showSignIn()">Sign in</a></div>
+    </div>
+
+    <!-- STEP 2: create account (email + password) -->
+    <div id="step-auth" style="display:none;">
+      <a class="back-link" href="#" onclick="event.preventDefault();showLanding()">← Back</a>
+      <div class="auth-track-badge" id="auth-track-badge"></div>
+      <div class="form-alert" id="auth-alert"></div>
+      <form id="auth-form" onsubmit="return submitAuth(event)" novalidate>
+        <div class="field">
+          <label>Full name</label>
+          <input type="text" id="auth-name" placeholder="Your full name">
+          <div class="error-text" id="err-name">Enter your full name.</div>
+        </div>
+        <div class="field" id="level-field" style="display:none;">
+          <label>Level</label>
+          <select id="auth-level">
+            <option value="Senior Associate">Senior Associate</option>
+            <option value="Associate">Associate</option>
+            <option value="Junior / Intern">Junior / Intern</option>
+          </select>
+        </div>
+        <div class="field" id="partner-field" style="display:none;">
+          <label>Select your partner</label>
+          <select id="auth-partner"></select>
+          <div class="hint" id="partner-hint">Your request will be sent to this partner for approval before you can sign in.</div>
+        </div>
+        <div class="field" id="practice-field" style="display:none;">
+          <label>Practice area</label>
+          <select id="auth-practice" onchange="document.getElementById('auth-practice-other').style.display=this.value==='other'?'block':'none';">
+            <option value="Litigation &amp; Arbitration">Litigation &amp; Arbitration</option>
+            <option value="Corporate &amp; Commercial">Corporate &amp; Commercial</option>
+            <option value="Regulatory &amp; Compliance">Regulatory &amp; Compliance</option>
+            <option value="Intellectual Property">Intellectual Property</option>
+            <option value="Real Estate">Real Estate</option>
+            <option value="Tax">Tax</option>
+            <option value="Employment">Employment</option>
+            <option value="Banking &amp; Finance">Banking &amp; Finance</option>
+            <option value="Media &amp; Entertainment">Media &amp; Entertainment</option>
+            <option value="Mergers &amp; Acquisitions">Mergers &amp; Acquisitions</option>
+            <option value="General Practice">General Practice</option>
+            <option value="other">Other…</option>
+          </select>
+          <input type="text" id="auth-practice-other" placeholder="Enter your practice area" style="display:none;margin-top:8px;">
+        </div>
+        <div class="field">
+          <label>Work email</label>
+          <input type="text" id="auth-email" placeholder="you@yourfirm.com" autocomplete="username">
+          <div class="error-text" id="err-email">Enter a valid work email address.</div>
+        </div>
+        <div class="field-row">
+          <div class="field">
+            <label>Create password</label>
+            <input type="password" id="auth-pass" placeholder="At least 6 characters" autocomplete="new-password">
+            <div class="error-text" id="err-pass">Password must be at least 6 characters.</div>
+          </div>
+          <div class="field">
+            <label>Confirm password</label>
+            <input type="password" id="auth-pass2" placeholder="Re-enter password" autocomplete="new-password">
+            <div class="error-text" id="err-pass2">Passwords don't match.</div>
+          </div>
+        </div>
+        <button type="submit" id="auth-submit-btn" class="btn btn-primary btn-block" style="padding:11px;">Create account &amp; enter workspace</button>
+      </form>
+      <div class="auth-toggle">By continuing you agree this is a demo workspace with no real data storage.</div>
+    </div>
+
+    <!-- STEP 3: pending partner approval -->
+    <div id="step-pending" style="display:none;">
+      <div class="login-sub">Request sent</div>
+      <div class="login-title" style="font-size:24px;">Waiting on partner approval</div>
+      <p class="login-tagline" id="pending-text"></p>
+      <button class="btn btn-primary" style="margin-top:18px;" onclick="showLanding()">Back to login</button>
+    </div>
+
+    <!-- STEP 4: sign in with existing account -->
+    <div id="step-signin" style="display:none;">
+      <a class="back-link" href="#" onclick="event.preventDefault();showLanding()">← Back</a>
+      <div class="auth-track-badge">Sign in</div>
+      <div class="form-alert" id="signin-alert"></div>
+      <form id="signin-form" onsubmit="return submitSignIn(event)" novalidate>
+        <div class="field"><label>Work email</label><input type="text" id="si-email" placeholder="you@yourfirm.com" autocomplete="username"></div>
+        <div class="field"><label>Password</label><input type="password" id="si-pass" placeholder="Your password" autocomplete="current-password"></div>
+        <button type="submit" class="btn btn-primary btn-block" style="padding:11px;">Sign in</button>
+      </form>
+      <div class="auth-toggle">New here? <a href="#" onclick="event.preventDefault();showLanding()">Create an account</a></div>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== APP ===================== -->
+<div id="app-screen">
+  <div class="shell">
+    <aside class="sidebar">
+      <div class="sidebar-brand"><div class="dot"></div><div class="word">Partner<b>Work</b></div></div>
+      <nav class="nav-group" id="nav-group"></nav>
+      <div class="sidebar-foot">
+        <a class="nav-item" href="#/settings" data-route="/settings">⚙ Settings</a>
+      </div>
+    </aside>
+
+    <div class="main-col">
+      <div class="topbar">
+        <button class="icon-btn" id="back-btn" onclick="goBack()" title="Back" style="display:none;">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/></svg>
+        </button>
+        <div class="breadcrumb" id="breadcrumb">Command Centre</div>
+        <div class="search-wrap">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+          <input id="global-search" type="text" placeholder="Search matters, tasks, people, documents…" autocomplete="off">
+          <div class="search-results" id="search-results"></div>
+        </div>
+        <div class="topbar-spacer"></div>
+        <button class="icon-btn" data-route="/notifications" id="bell-btn" title="Notifications">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8a6 6 0 10-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 01-3.4 0"/></svg>
+          <span class="dot" id="bell-dot" style="display:none"></span>
+        </button>
+        <div class="topbar-user">
+          <div class="avatar" id="topbar-avatar" style="width:30px;height:30px;font-size:12px;"></div>
+          <div>
+            <div class="name" id="topbar-name"></div>
+            <div class="role" id="topbar-role"></div>
+          </div>
+          <a class="switch-link" href="#" id="switch-user" style="margin-left:8px;">Switch</a>
+        </div>
+      </div>
+      <div class="content"><div class="content-inner" id="view-root"></div></div>
+    </div>
+  </div>
+</div>
+
+<div class="modal-backdrop" id="modal-backdrop">
+  <div class="modal" id="modal"></div>
+</div>
+<div class="toast-wrap" id="toast-wrap"></div>
+
+<script>
+/* =====================================================================
+   ICONS
+===================================================================== */
+const ICONS = {
+  grid:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>',
+  work:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 7h16v12H4z"/><path d="M9 7V5a2 2 0 012-2h2a2 2 0 012 2v2"/><path d="M4 12h16"/></svg>',
+  folder:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6a2 2 0 012-2h4l2 2h8a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg>',
+  check:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M8 12l3 3 5-6"/></svg>',
+  userplus:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c0-3.6 3-6 6.5-6s6.5 2.4 6.5 6"/><path d="M18 8v6M21 11h-6"/></svg>',
+  swap:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 8h13l-3-3M20 16H7l3 3"/></svg>',
+  cap:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 9l10-5 10 5-10 5z"/><path d="M6 11v5c0 1.5 3 3 6 3s6-1.5 6-3v-5"/></svg>',
+  users:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="8" cy="8" r="3.2"/><circle cx="16.5" cy="9.5" r="2.6"/><path d="M2 20c0-3.3 2.7-5.5 6-5.5s6 2.2 6 5.5M14.5 14.6c2.6.2 4.5 2.1 4.5 5.4"/></svg>',
+  doc:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 3h7l4 4v14H7z"/><path d="M14 3v4h4"/></svg>',
+  spark:'<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l1.8 5.6L19 9l-5.2 1.6L12 16l-1.8-5.4L5 9l5.2-1.4z"/></svg>',
+  bell:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8a6 6 0 10-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 01-3.4 0"/></svg>',
+};
+function icon(name){return ICONS[name]||'';}
+
+/* =====================================================================
+   DATA MODEL (seeded fictional demo data, in-memory only)
+===================================================================== */
+const COLORS = ['#1F5A46','#9C7A29','#5B6472','#7A4B3A','#3B5C7A','#6B4F8C'];
+function initials(n){return n.split(' ').map(w=>w[0]).slice(0,2).join('').toUpperCase();}
+function colorFor(id){let h=0;for(const c of id) h=(h*31+c.charCodeAt(0))>>>0;return COLORS[h%COLORS.length];}
+function avatarHtml(userId,size){
+  const u = DB.users.find(x=>x.id===userId);
+  if(!u) return '';
+  const s = size?`width:${size}px;height:${size}px;font-size:${Math.round(size*0.36)}px;`:'';
+  return `<div class="avatar" style="background:${colorFor(u.id)};${s}" title="${u.name}">${initials(u.name)}</div>`;
+}
+
+const DB = {
+  users:[],
+  matters:[],
+  tasks:[],
+  matterEvents:[],
+  documents:[],
+  handovers:[],
+  onboarding:[],
+  notifications:[],
+  worksheets:[],
+  auditLog:[],
+};
+function defaultOnboardingSteps(){
+  return [
+    {id:'s1', day:'Day 0', title:'Welcome email sent', done:false},
+    {id:'s2', day:'Day 0', title:'Firm handbook delivered', done:false},
+    {id:'s3', day:'Day 0', title:'NDA signed', done:false},
+    {id:'s4', day:'Day 1', title:'IT setup completed', done:false},
+    {id:'s5', day:'Day 1', title:'Security orientation', done:false},
+    {id:'s6', day:'Day 2', title:'Practice-area orientation', done:false},
+    {id:'s7', day:'Day 3', title:'Training materials reviewed', done:false},
+    {id:'s8', day:'Week 1', title:'First workflow task assigned', done:false},
+  ];
+}
+
+function logAudit(action, entity, meta){
+  DB.auditLog.unshift({action, entity, meta, user:state.currentUser.id, time:new Date().toISOString()});
+}
+function addNotification(userId, type, text){
+  DB.notifications.unshift({id:'n'+Math.random().toString(36).slice(2,8), user:userId, type, text, read:false, time:'just now'});
+}
+function addMatterEvent(matterId, text){
+  DB.matterEvents.unshift({matter:matterId, date: new Date().toISOString().slice(0,10), user: state.currentUser.id, text});
+}
+
+/* =====================================================================
+   STATE + ROUTER
+===================================================================== */
+const state = { currentUser:null, route:'/dashboard', history:[] };
+const NAV = [
+  {path:'/dashboard', label:'Command Centre', icon:'grid', roles:['Partner','Senior Associate']},
+  {path:'/mywork', label:'My Work', icon:'work', roles:['Senior Associate','Associate','Junior / Intern']},
+  {path:'/matters', label:'Matters', icon:'folder', roles:['Partner','Senior Associate','Associate','Junior / Intern']},
+  {path:'/tasks', label:'Tasks', icon:'check', roles:['Partner','Senior Associate','Associate','Junior / Intern']},
+  {path:'/partner-access', label:'Assign Work', icon:'userplus', roles:['Partner','Senior Associate','Associate']},
+  {path:'/handovers', label:'Handovers', icon:'swap', roles:['Partner','Senior Associate','Associate']},
+  {path:'/onboarding', label:'Onboarding', icon:'cap', roles:['Partner','HR / Admin','Junior / Intern']},
+  {path:'/team', label:'Team', icon:'users', roles:['Partner','HR / Admin']},
+  {path:'/documents', label:'Documents', icon:'doc', roles:['Partner','Senior Associate','Associate','Junior / Intern']},
+  {path:'/notifications', label:'Notifications', icon:'bell', roles:['Partner','Senior Associate','Associate','Junior / Intern','HR / Admin']},
+];
+function assignableUsersFor(u){
+  if(!u) return [];
+  if(u.role==='Partner') return DB.users.filter(x=>x.role!=='Partner' && x.role!=='HR / Admin' && x.access!==false);
+  if(u.role==='Senior Associate') return DB.users.filter(x=>['Associate','Junior / Intern'].includes(x.role) && x.access!==false);
+  if(u.role==='Associate') return DB.users.filter(x=>x.role==='Junior / Intern' && x.access!==false);
+  return [];
+}
+function canAssignWork(u){ return u && ['Partner','Senior Associate','Associate'].includes(u.role); }
+
+function defaultRouteFor(role){
+  if(role==='Partner'||role==='Senior Associate') return '/dashboard';
+  if(role==='HR / Admin') return '/onboarding';
+  return '/mywork';
+}
+
+function login(userId){
+  state.currentUser = DB.users.find(u=>u.id===userId);
+  state.history = [];
+  document.getElementById('login-screen').style.display='none';
+  document.getElementById('app-screen').style.display='block';
+  renderShell();
+  navigate(defaultRouteFor(state.currentUser.role));
+}
+function logout(){
+  document.getElementById('app-screen').style.display='none';
+  document.getElementById('login-screen').style.display='flex';
+  state.currentUser=null;
+  showLanding();
+}
+
+function navigate(path){
+  if(state.route && state.route!==path) state.history.push(state.route);
+  state.route = path;
+  history.replaceState(null,'', '#'+path);
+  renderShell();
+  render();
+}
+function goBack(){
+  const prev = state.history.pop();
+  if(prev){
+    state.route = prev;
+    history.replaceState(null,'', '#'+prev);
+    renderShell();
+    render();
+  } else {
+    navigate(defaultRouteFor(state.currentUser.role));
+  }
+}
+window.addEventListener('hashchange', ()=>{
+  if(!state.currentUser) return;
+  const p = location.hash.slice(1)||'/dashboard';
+  if(state.route && state.route!==p) state.history.push(state.route);
+  state.route = p;
+  renderShell();
+  render();
+});
+
+function renderShell(){
+  const nav = document.getElementById('nav-group');
+  const items = NAV.filter(n=>n.roles.includes(state.currentUser.role));
+  const pendingCount = DB.tasks.filter(t=>t.status==='AWAITING_REVIEW').length;
+  nav.innerHTML = items.map(n=>{
+    const active = state.route===n.path || state.route.startsWith(n.path+'/');
+    const badge = (n.path==='/dashboard' && (state.currentUser.role==='Partner') && pendingCount>0) ? `<span class="badge">${pendingCount}</span>` : '';
+    return `<a class="nav-item ${active?'active':''}" href="#${n.path}" data-route="${n.path}">${icon(n.icon)}<span>${n.label}</span>${badge}</a>`;
+  }).join('');
+  document.getElementById('topbar-avatar').outerHTML = avatarHtml(state.currentUser.id,30).replace('class="avatar"','id="topbar-avatar" class="avatar"');
+  document.getElementById('topbar-name').textContent = state.currentUser.name;
+  document.getElementById('topbar-role').textContent = state.currentUser.role;
+  const navItem = NAV.find(n=>n.path===state.route) || NAV.find(n=>state.route.startsWith(n.path));
+  document.getElementById('breadcrumb').textContent = navItem?navItem.label:'PartnerWork';
+  const backBtn = document.getElementById('back-btn');
+  if(backBtn) backBtn.style.display = state.history.length ? 'flex' : 'none';
+  const unread = DB.notifications.filter(n=>n.user===state.currentUser.id && !n.read).length;
+  document.getElementById('bell-dot').style.display = unread>0?'block':'none';
+}
+
+/* =====================================================================
+   HELPERS
+===================================================================== */
+function userName(id){const u=DB.users.find(x=>x.id===id);return u?u.name:'—';}
+function roleDept(u){ return u.dept? `${u.role} · ${u.dept}` : u.role; }
+function matterById(id){return DB.matters.find(m=>m.id===id);}
+function taskById(id){return DB.tasks.find(t=>t.id===id);}
+function fmtDate(d){ if(!d) return '—'; const dt=new Date(d+'T00:00:00'); return dt.toLocaleDateString('en-GB',{day:'numeric',month:'short'}); }
+function daysUntil(d){ const t=new Date(d+'T00:00:00'); const n=new Date(); n.setHours(0,0,0,0); return Math.round((t-n)/86400000); }
+function todayISO(){ const d=new Date(); d.setHours(0,0,0,0); return d.toISOString().slice(0,10); }
+function addDays(iso, n){ const d=new Date(iso+'T00:00:00'); d.setDate(d.getDate()+n); return d.toISOString().slice(0,10); }
+function nextWeekdayISO(name){
+  const days=['sunday','monday','tuesday','wednesday','thursday','friday','saturday'];
+  const target = days.indexOf(name.toLowerCase());
+  const now = new Date(); now.setHours(0,0,0,0);
+  let diff = (target - now.getDay() + 7) % 7; if(diff===0) diff=7;
+  now.setDate(now.getDate()+diff);
+  return now.toISOString().slice(0,10);
+}
+function isOverdue(t){ return t.status!=='COMPLETED' && t.status!=='APPROVED' && daysUntil(t.deadline)<0; }
+function pillClass(level){ return {Critical:'pill-critical',High:'pill-high',Medium:'pill-medium',Low:'pill-low'}[level]||'pill-medium'; }
+function statusLabel(s){ return {NEW:'New',ASSIGNED:'Assigned',IN_PROGRESS:'In progress',AWAITING_REVIEW:'Awaiting review',APPROVED:'Approved',COMPLETED:'Completed',REJECTED:'Rejected'}[s]||s; }
+function myTasks(userId){ return DB.tasks.filter(t=>t.assignee===userId && t.status!=='COMPLETED'); }
+function accessibleMatters(){
+  const u = state.currentUser;
+  if(u.role==='Partner' || u.role==='HR / Admin') return DB.matters;
+  return DB.matters.filter(m=>m.team.includes(u.id) || m.partner===u.id);
+}
+function canAccessMatter(id){ return accessibleMatters().some(m=>m.id===id); }
+function workloadLabel(count){ if(count>=6) return 'Overloaded'; if(count>=4) return 'Busy'; if(count>=1) return 'Normal'; return 'Available'; }
+function workloadPill(label){ const map={Overloaded:'pill-critical',Busy:'pill-high',Normal:'pill-medium',Available:'pill-low'}; return map[label]; }
+function toast(msg){
+  const wrap=document.getElementById('toast-wrap');
+  const el=document.createElement('div'); el.className='toast'; el.textContent=msg;
+  wrap.appendChild(el); requestAnimationFrame(()=>el.classList.add('show'));
+  setTimeout(()=>{el.classList.remove('show'); setTimeout(()=>el.remove(),250);},2600);
+}
+function escapeHtml(s){ return (s||'').replace(/[&<>"']/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+
+function openModal(title, bodyHtml, footHtml){
+  document.getElementById('modal').innerHTML = `
+    <div class="modal-head"><div class="modal-title">${title}</div><button class="close-x" onclick="closeModal()">✕</button></div>
+    <div class="modal-body">${bodyHtml}</div>
+    ${footHtml?`<div class="modal-foot">${footHtml}</div>`:''}`;
+  document.getElementById('modal-backdrop').classList.add('show');
+}
+function closeModal(){ document.getElementById('modal-backdrop').classList.remove('show'); }
+document.getElementById('modal-backdrop').addEventListener('click',e=>{ if(e.target.id==='modal-backdrop') closeModal(); });
+
+/* =====================================================================
+   VIEWS
+===================================================================== */
+const view = document.getElementById('view-root');
+function render(){
+  const r = state.route;
+  if(r==='/dashboard') return viewDashboard();
+  if(r==='/mywork') return viewMyWork();
+  if(r==='/matters') return viewMatters();
+  if(r.startsWith('/matters/')) return viewMatterDetail(r.split('/')[2]);
+  if(r==='/tasks') return viewTasks();
+  if(r==='/partner-access') return viewPartnerAccess();
+  if(r==='/handovers') return viewHandovers();
+  if(r.startsWith('/handovers/')) return viewHandoverDetail(r.split('/')[2]);
+  if(r==='/onboarding') return viewOnboarding();
+  if(r==='/team') return viewTeam();
+  if(r==='/documents') return viewDocuments();
+  if(r==='/notifications') return viewNotifications();
+  if(r==='/settings') return viewSettings();
+  view.innerHTML = `<div class="empty-state"><div class="big">Not found</div>Choose a page from the sidebar.</div>`;
+}
+
+/* ---------- PARTNER COMMAND CENTRE ---------- */
+function aiAttentionItems(){
+  const items = [];
+  const overdue = DB.tasks.filter(isOverdue);
+  if(overdue.length) items.push({title:`${overdue.length} task${overdue.length>1?'s are':' is'} overdue`, sub: overdue.slice(0,2).map(t=>t.title).join(', ')+(overdue.length>2?', …':'')});
+  const evidenceMissing = DB.tasks.filter(t=>t.status==='AWAITING_REVIEW' && (!t.evidence||!t.evidence.length));
+  if(evidenceMissing.length) items.push({title:`${evidenceMissing.length} submission${evidenceMissing.length>1?'s':''} may be missing evidence`, sub:'Review before approving'});
+  const staleMatters = DB.matters.filter(m=>{ const events = DB.matterEvents.filter(e=>e.matter===m.id); return events.length===0; });
+  if(staleMatters.length) items.push({title:`${staleMatters.length} matter${staleMatters.length>1?'s have':' has'} no recorded activity yet`, sub: staleMatters.slice(0,2).map(m=>m.name).join(', ')});
+  const members = DB.users.filter(u=>!['Partner','HR / Admin'].includes(u.role) && u.access!==false);
+  const overloaded = members.filter(u=>workloadLabel(myTasks(u.id).length)==='Overloaded');
+  if(overloaded.length) items.push({title:`${overloaded.length===1?overloaded[0].name+' may be overloaded':overloaded.length+' team members may be overloaded'}`, sub:'Consider reassigning work'});
+  const unassignedHighRisk = DB.matters.filter(m=>m.risk==='High'||m.risk==='Critical').filter(m=>DB.tasks.filter(t=>t.matter===m.id && t.status!=='COMPLETED').length===0);
+  if(unassignedHighRisk.length) items.push({title:`${unassignedHighRisk.length} high-risk matter${unassignedHighRisk.length>1?'s have':' has'} no open tasks`, sub: unassignedHighRisk.slice(0,2).map(m=>m.name).join(', ')});
+  return items.slice(0,4);
+}
+function viewDashboard(){
+  const critical = DB.tasks.filter(t=>t.risk==='Critical' || isOverdue(t)).slice(0,3);
+  const todayDeadlines = DB.tasks.filter(t=>t.status!=='COMPLETED').sort((a,b)=>a.deadline.localeCompare(b.deadline)).slice(0,4);
+  const pendingApprovals = DB.tasks.filter(t=>t.status==='AWAITING_REVIEW');
+  const overdue = DB.tasks.filter(isOverdue);
+  const hearings = DB.matters.filter(m=>m.hearingPrep!==null);
+  const teamCounts = DB.users.filter(u=>u.role!=='Partner'&&u.role!=='HR / Admin').map(u=>({u, n:myTasks(u.id).length}));
+
+  view.innerHTML = `
+    <div class="page-head">
+      <div>
+        <div class="page-eyebrow">${new Date().toLocaleDateString('en-GB',{weekday:'long', day:'numeric', month:'long'})}</div>
+        <div class="page-title">Good morning, ${state.currentUser.name.split(' ')[0]}.</div>
+        <div class="page-sub">Here's what needs your attention today.</div>
+      </div>
+      <button class="btn btn-primary" data-route="/partner-access">+ New instruction</button>
+    </div>
+
+    <div class="grid grid-3" style="margin-bottom:16px;">
+      <div class="card">
+        <div class="card-head"><div class="card-title">Critical issues</div></div>
+        <div class="card-stat" style="color:var(--critical)">${critical.length}</div>
+        <div class="card-stat-label" style="margin-bottom:12px;">requiring attention</div>
+        ${critical.map(t=>`<div class="list-row"><div class="row-main"><div class="row-title">${escapeHtml(t.title)}</div><div class="row-sub">${matterById(t.matter).name} · ${userName(t.assignee)}</div></div><span class="pill ${pillClass(t.risk)}">${t.risk}</span></div>`).join('') || emptyRow('No critical issues right now.')}
+        <button class="btn btn-ghost btn-sm" style="margin-top:10px;" data-route="/tasks">View issues</button>
+      </div>
+
+      <div class="card">
+        <div class="card-head"><div class="card-title">Today's deadlines</div></div>
+        <div class="timeline">
+          ${todayDeadlines.map(t=>`<div class="tl-item"><div class="tl-date">${fmtDate(t.deadline)}</div><div class="tl-text">${escapeHtml(t.title)}</div><div class="tl-note">${matterById(t.matter).name}</div></div>`).join('') || emptyRow('Nothing scheduled.')}
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-head"><div class="card-title">Team workload</div></div>
+        <div class="avatars-row" style="margin-bottom:12px;">${teamCounts.map(tc=>avatarHtml(tc.u.id,30)).join('')}</div>
+        ${['Overloaded','Busy','Normal','Available'].map(lvl=>{
+          const n = teamCounts.filter(tc=>workloadLabel(tc.n)===lvl).length;
+          return `<div class="list-row"><div class="row-main row-sub">${lvl}</div><span class="pill ${workloadPill(lvl)}">${n}</span></div>`;
+        }).join('')}
+        <button class="btn btn-ghost btn-sm" style="margin-top:10px;" data-route="/team">View team</button>
+      </div>
+    </div>
+
+    <div class="grid grid-2" style="margin-bottom:16px;">
+      <div class="card ai-card">
+        <div class="card-head">
+          <div class="card-title" style="color:#6B551D;">${icon('spark')} AI attention required</div>
+        </div>
+        ${aiAttentionItems().map(i=>`<div class="list-row"><div class="row-main"><div class="row-title">${i.title}</div><div class="row-sub">${i.sub}</div></div></div>`).join('') || `<div class="empty-state" style="padding:14px 2px;">AI hasn't flagged anything yet. As you add matters, tasks and deadlines, insights will appear here.</div>`}
+        <button class="btn btn-sm" style="margin-top:12px;background:#fff;" data-route="/tasks">Review tasks</button>
+      </div>
+
+      <div class="card">
+        <div class="card-head"><div class="card-title">Pending approvals</div><span class="pill pill-status">${pendingApprovals.length}</span></div>
+        ${pendingApprovals.map(t=>`
+          <div class="list-row">
+            <div class="row-main">
+              <div class="row-title">${escapeHtml(t.title)}</div>
+              <div class="row-sub">${matterById(t.matter).name} · ${userName(t.assignee)} · ${t.submittedAt||''}</div>
+            </div>
+            <button class="btn btn-sm" onclick="openReviewModal('${t.id}')">Review</button>
+          </div>`).join('') || emptyRow('Nothing awaiting your review.')}
+      </div>
+    </div>
+
+    <div class="grid grid-2" style="margin-bottom:16px;">
+      <div class="card">
+        <div class="card-head"><div class="card-title">Upcoming hearings</div></div>
+        ${hearings.map(m=>`
+          <div class="list-row">
+            <div class="row-main">
+              <div class="row-title">${m.name}</div>
+              <div class="row-sub">${m.nextEvent.label} · ${m.nextEvent.date}</div>
+              <div class="progress-track" style="margin-top:6px;width:160px;"><div class="progress-fill" style="width:${m.hearingPrep}%"></div></div>
+            </div>
+            <span class="row-time">${m.hearingPrep}% ready</span>
+          </div>`).join('') || emptyRow('No hearings scheduled.')}
+      </div>
+
+      <div class="card">
+        <div class="card-head"><div class="card-title">Overdue work</div><span class="pill pill-critical">${overdue.length}</span></div>
+        ${overdue.map(t=>`
+          <div class="list-row">
+            <div class="row-main">
+              <div class="row-title">${escapeHtml(t.title)}</div>
+              <div class="row-sub">${matterById(t.matter).name} · ${userName(t.assignee)} · ${Math.abs(daysUntil(t.deadline))} day(s) overdue</div>
+            </div>
+            <button class="btn btn-sm" onclick="reassignPrompt('${t.id}')">Reassign</button>
+          </div>`).join('') || emptyRow("You're all clear. No overdue work detected.")}
+      </div>
+    </div>
+
+    <div class="grid grid-2">
+      <div class="card">
+        <div class="card-head"><div class="card-title">Recent matter activity</div></div>
+        <div class="timeline">
+          ${DB.matterEvents.slice(0,5).map(e=>`<div class="tl-item"><div class="tl-date">${fmtDate(e.date)}</div><div class="tl-text">${escapeHtml(e.text)}</div><div class="tl-note">${matterById(e.matter).name} · ${userName(e.user)}</div></div>`).join('')}
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-head"><div class="card-title">Team activity</div></div>
+        ${DB.tasks.filter(t=>t.status==='COMPLETED').slice(0,4).map(t=>`
+          <div class="list-row"><div class="row-main"><div class="row-title">${userName(t.assignee)} completed "${escapeHtml(t.title)}"</div><div class="row-sub">${matterById(t.matter).name}</div></div></div>`).join('') || emptyRow('No recent completions.')}
+      </div>
+    </div>
+  `;
+}
+function emptyRow(msg){ return `<div class="empty-state" style="padding:16px 4px;">${msg}</div>`; }
+
+/* ---------- MY WORK ---------- */
+function viewMyWork(){
+  const uid = state.currentUser.id;
+  const all = DB.tasks.filter(t=>t.assignee===uid);
+  const active = all.filter(t=>t.status!=='COMPLETED');
+  const completedToday = all.filter(t=>t.status==='COMPLETED').length;
+  const total = all.length || 1;
+  const pct = Math.round((completedToday/total)*100);
+  const groups = {Critical:[],High:[],Medium:[],Low:[]};
+  active.forEach(t=>{ if(t.status!=='AWAITING_REVIEW') groups[t.priority]?.push(t); });
+  const awaiting = active.filter(t=>t.status==='AWAITING_REVIEW');
+  const isJuniorOrIntern = state.currentUser.role==='Junior / Intern';
+  const myHandovers = DB.handovers.filter(h=>h.incoming===uid);
+  const bandwidthAlreadySentToday = state.currentUser.lastBandwidthRequest===todayISO();
+
+  view.innerHTML = `
+    <div class="page-head">
+      <div>
+        <div class="page-title">My Work</div>
+        <div class="page-sub">Good morning, ${state.currentUser.name.split(' ')[0]}.</div>
+      </div>
+      ${isJuniorOrIntern?`<button class="btn btn-primary" ${bandwidthAlreadySentToday?'disabled title="You can send one bandwidth request per day."':''} onclick="bandwidthRequestModal()">Raise Bandwidth Request</button>`:''}
+    </div>
+
+    ${myHandovers.length?myHandovers.map(h=>{
+      const m = matterById(h.matter);
+      return `<div class="card" style="margin-bottom:20px;border-left:3px solid var(--accent);">
+        <div class="card-head"><div class="card-title">Handover received — ${m.name}</div><span class="pill ${h.status==='Official'?'pill-medium':'pill-high'}">${h.status}</span></div>
+        <div class="row-sub" style="margin-bottom:10px;">From ${userName(h.outgoing)}${h.ai?' · AI summary ready':' · summary not generated yet'}</div>
+        <button class="btn btn-sm" data-route="/handovers/${h.id}">Open handover</button>
+      </div>`;
+    }).join(''):''}
+
+    <div class="card" style="margin-bottom:20px;max-width:420px;">
+      <div class="card-head"><div class="card-title">Today's progress</div><span class="row-sub">${completedToday} / ${total} completed</span></div>
+      <div class="progress-track"><div class="progress-fill" style="width:${pct}%"></div></div>
+    </div>
+
+    ${awaiting.length?`<div class="page-eyebrow" style="margin-bottom:8px;">AWAITING REVIEW</div><div class="grid grid-3" style="margin-bottom:22px;">${awaiting.map(taskCard).join('')}</div>`:''}
+
+    ${['Critical','High','Medium','Low'].map(p=>{
+      if(!groups[p].length) return '';
+      return `<div class="page-eyebrow" style="margin-bottom:8px;">${p.toUpperCase()}</div><div class="grid grid-3" style="margin-bottom:22px;">${groups[p].map(taskCard).join('')}</div>`;
+    }).join('')}
+
+    ${active.length===0?`<div class="card"><div class="empty-state"><div class="big">Your workload is clear.</div>New instructions will appear here.</div></div>`:''}
+  `;
+}
+function bandwidthRequestModal(){
+  if(state.currentUser.lastBandwidthRequest===todayISO()){ toast("You've already sent a bandwidth request today."); return; }
+  const recipients = DB.users.filter(u=>u.id!==state.currentUser.id);
+  if(recipients.length===0){ toast('No one else is on the team yet to send this to.'); return; }
+  openModal('Raise bandwidth request', `
+    <div class="hint" style="margin-bottom:14px;">Let someone on the team know you have room to take on more work. You can send one of these per day.</div>
+    <div class="field"><label>Send to</label>
+      <select id="bw-recipient">${recipients.map(u=>`<option value="${u.id}">${u.name} — ${u.role}</option>`).join('')}</select>
+    </div>
+    <div class="field"><label>Message (optional)</label><textarea id="bw-message" placeholder="e.g. I've wrapped up my current tasks and have bandwidth for more work."></textarea></div>
+  `, `<button class="btn btn-ghost" onclick="closeModal()">Cancel</button><button class="btn btn-primary" onclick="sendBandwidthRequest()">Send</button>`);
+}
+function sendBandwidthRequest(){
+  const recipient = document.getElementById('bw-recipient').value;
+  const msg = document.getElementById('bw-message').value.trim() || 'I have bandwidth to take on more work.';
+  addNotification(recipient, 'Bandwidth availability', `${state.currentUser.name} (${state.currentUser.role}) says: "${msg}"`);
+  state.currentUser.lastBandwidthRequest = todayISO();
+  closeModal(); toast('Bandwidth request sent.'); render();
+}
+function taskCard(t){
+  const m = matterById(t.matter);
+  const overdue = isOverdue(t);
+  return `<div class="card" style="padding:16px;">
+    <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px;">
+      <span class="pill ${t.rejectionReason?'pill-critical':pillClass(t.priority)}">${t.rejectionReason?'Returned':t.priority}</span>
+      <span class="pill pill-status">${statusLabel(t.status)}</span>
+    </div>
+    <div class="row-title" style="font-size:14px;margin-bottom:4px;">${escapeHtml(t.title)}</div>
+    <div class="row-sub">${m.name} · ${m.practiceArea}</div>
+    <div class="row-sub" style="margin-top:6px;color:${overdue?'var(--critical)':'var(--text-2)'};font-weight:${overdue?'700':'400'};">
+      ${overdue?'Overdue · ':''}Due ${fmtDate(t.deadline)}
+    </div>
+    ${t.rejectionReason?`<div class="ai-note" style="border-left-color:var(--critical);background:var(--critical-soft);color:var(--critical);margin-top:10px;"><b>Returned by ${userName(t.createdBy)}.</b> ${escapeHtml(t.rejectionReason)}</div>`:''}
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-top:12px;">
+      ${avatarHtml(t.assignee,24)}
+      ${t.status==='AWAITING_REVIEW'?`<button class="btn btn-sm" onclick="openTaskModal('${t.id}')">View</button>`:
+        t.status==='NEW'||t.status==='ASSIGNED'?`<button class="btn btn-sm" onclick="startTask('${t.id}')">Start</button>`:
+        `<button class="btn btn-sm btn-primary" onclick="openCompleteModal('${t.id}')">${t.rejectionReason?'Resubmit':'Submit'}</button>`}
+    </div>
+  </div>`;
+}
+function startTask(id){ const t=taskById(id); t.status='IN_PROGRESS'; toast('Task moved to in progress.'); render(); }
+
+function openCompleteModal(id){
+  const t = taskById(id);
+  openModal('Task completion', `
+    <div class="kv"><div class="k">Task</div><div class="v">${escapeHtml(t.title)}</div></div>
+    <div class="kv"><div class="k">Matter</div><div class="v">${matterById(t.matter).name}</div></div>
+    ${t.rejectionReason?`<div class="ai-note" style="border-left-color:var(--critical);background:var(--critical-soft);color:var(--critical);margin-top:14px;"><b>Returned by ${userName(t.createdBy)}.</b> ${escapeHtml(t.rejectionReason)}</div>`:''}
+    <div class="field" style="margin-top:16px;"><label>Completion note</label><textarea id="cf-note" placeholder="What did you do? Anything the reviewer should know?"></textarea></div>
+    <div class="field"><label>Attach work (URL)</label><input type="text" id="cf-work-url" placeholder="https://..."></div>
+    <div class="field"><label>Supporting document (URL, optional)</label><input type="text" id="cf-doc-url" placeholder="https://..."></div>
+  `, `<button class="btn btn-ghost" onclick="closeModal()">Cancel</button><button class="btn btn-primary" onclick="submitTask('${id}')">Submit for review</button>`);
+}
+function submitTask(id){
+  const t = taskById(id);
+  const note = document.getElementById('cf-note').value.trim();
+  const workUrl = document.getElementById('cf-work-url').value.trim();
+  const docUrl = document.getElementById('cf-doc-url').value.trim();
+  if(!workUrl){ toast('Add a URL for the work you completed.'); return; }
+  const evidence = [{name:`${t.title} — Work`, url:workUrl}];
+  saveToDocuments(t.matter, `${t.title} — Work`, workUrl, 'Submission');
+  if(docUrl){
+    evidence.push({name:`${t.title} — Supporting document`, url:docUrl});
+    saveToDocuments(t.matter, `${t.title} — Supporting document`, docUrl, 'Supporting document');
+  }
+  t.status='AWAITING_REVIEW'; t.note=note||'(no note added)'; t.evidence=evidence;
+  t.submittedAt = 'just now';
+  t.rejectionReason = null;
+  addNotification(t.createdBy, 'Task awaiting approval', `${state.currentUser.name} submitted "${t.title}" for review.`);
+  addMatterEvent(t.matter, `${state.currentUser.name} submitted "${t.title}" for review.`);
+  closeModal(); toast('Submitted for review.'); render();
+}
+function saveToDocuments(matterId, name, url, type){
+  DB.documents.push({ id:'d'+Math.random().toString(36).slice(2,7), matter:matterId, name, type, uploadedBy:state.currentUser.id, date:todayISO(), url });
+}
+
+function openTaskModal(id){
+  const t = taskById(id); const m = matterById(t.matter);
+  openModal('Task detail', `
+    <div class="kv"><div class="k">Task</div><div class="v">${escapeHtml(t.title)}</div></div>
+    <div class="kv"><div class="k">Matter</div><div class="v">${m.name}</div></div>
+    <div class="kv"><div class="k">Assignee</div><div class="v">${userName(t.assignee)}</div></div>
+    <div class="kv"><div class="k">Original instruction</div><div class="v" style="max-width:280px;">${escapeHtml(t.instruction||t.desc)}</div></div>
+    <div class="kv"><div class="k">Evidence</div><div class="v">${t.evidence&&t.evidence.length?t.evidence.map(e=>e.url?`<a href="${e.url}" target="_blank" rel="noopener">${e.name}</a>`:e.name).join(', '):'None'}</div></div>
+    <div class="kv"><div class="k">Completion note</div><div class="v" style="max-width:280px;">${escapeHtml(t.note||'—')}</div></div>
+    <div class="kv"><div class="k">Submitted</div><div class="v">${t.submittedAt||'—'}</div></div>
+    ${t.rejectionReason?`<div class="ai-note" style="border-left-color:var(--critical);background:var(--critical-soft);color:var(--critical);margin-top:14px;"><b>Returned by ${userName(t.createdBy)}.</b> ${escapeHtml(t.rejectionReason)}</div>`:''}
+  `, `<button class="btn btn-ghost" onclick="closeModal()">Close</button>`);
+}
+
+function openReviewModal(id){
+  const t = taskById(id); const m = matterById(t.matter);
+  const canReview = state.currentUser.role==='Partner' || t.createdBy===state.currentUser.id;
+  openModal('Verify submitted work', `
+    <div class="kv"><div class="k">Task</div><div class="v">${escapeHtml(t.title)}</div></div>
+    <div class="kv"><div class="k">Assignee</div><div class="v">${userName(t.assignee)}</div></div>
+    <div class="kv"><div class="k">Original instruction</div><div class="v" style="max-width:280px;">${escapeHtml(t.instruction||t.desc)}</div></div>
+    <div class="kv"><div class="k">Work submitted</div><div class="v">${t.evidence&&t.evidence.length?t.evidence.map(e=>e.url?`<a href="${e.url}" target="_blank" rel="noopener">${e.name}</a>`:e.name).join(', '):'—'}</div></div>
+    <div class="kv"><div class="k">Completion note</div><div class="v" style="max-width:280px;">${escapeHtml(t.note)}</div></div>
+    <div class="kv"><div class="k">Time completed</div><div class="v">${t.submittedAt}</div></div>
+    ${canReview?`<div class="field" style="margin-top:16px;"><label>Rejection reason (only needed if returning work)</label><textarea id="rej-reason" placeholder="e.g. Please revise paragraph 3 and include updated figures."></textarea></div>`:''}
+  `, canReview?`<button class="btn btn-danger" style="border-color:var(--critical);" onclick="rejectTask('${id}')">Reject &amp; return</button><button class="btn btn-primary" onclick="approveTask('${id}')">Approve</button>`:`<button class="btn btn-ghost" onclick="closeModal()">Close</button>`);
+}
+function approveTask(id){
+  const t = taskById(id); t.status='COMPLETED'; t.approvedAt='just now';
+  addNotification(t.assignee,'Task completed', `"${t.title}" was approved by ${state.currentUser.name}.`);
+  addMatterEvent(t.matter, `${state.currentUser.name} approved "${t.title}".`);
+  closeModal(); toast('Task approved and matter history updated.'); renderShell(); render();
+}
+function rejectTask(id){
+  const t = taskById(id); const reason = document.getElementById('rej-reason').value.trim();
+  if(!reason){ toast('Add a reason before returning the task.'); return; }
+  t.status='IN_PROGRESS'; t.rejectionReason=reason;
+  addNotification(t.assignee,'Task rejected', `"${t.title}" was returned: ${reason}`);
+  addMatterEvent(t.matter, `${state.currentUser.name} returned "${t.title}" for revision.`);
+  closeModal(); toast('Task returned to assignee.'); renderShell(); render();
+}
+function reassignPrompt(id){
+  const t = taskById(id);
+  const options = DB.users.filter(u=>['Senior Associate','Associate','Junior / Intern'].includes(u.role));
+  openModal('Reassign task', `
+    <div class="kv"><div class="k">Task</div><div class="v">${escapeHtml(t.title)}</div></div>
+    <div class="field" style="margin-top:14px;"><label>New assignee</label>
+      <select id="reassign-select">${options.map(u=>`<option value="${u.id}" ${u.id===t.assignee?'selected':''}>${u.name} — ${u.role}</option>`).join('')}</select>
+    </div>`, `<button class="btn btn-ghost" onclick="closeModal()">Cancel</button><button class="btn btn-primary" onclick="doReassign('${id}')">Reassign</button>`);
+}
+function doReassign(id){
+  const t = taskById(id); const nu = document.getElementById('reassign-select').value;
+  t.assignee = nu; t.status='ASSIGNED';
+  addNotification(nu,'Task assigned', `You were assigned "${t.title}" by ${state.currentUser.name}.`);
+  addMatterEvent(t.matter, `Task "${t.title}" reassigned to ${userName(nu)}.`);
+  closeModal(); toast('Task reassigned.'); render();
+}
+
+/* ---------- MATTERS ---------- */
+function viewMatters(){
+  const isPartner = state.currentUser.role==='Partner' || state.currentUser.role==='HR / Admin';
+  const matters = accessibleMatters();
+  view.innerHTML = `
+    <div class="page-head">
+      <div><div class="page-title">Matters</div><div class="page-sub">${matters.length} ${isPartner?'active matters across the firm':'matters you are authorized to view'}</div></div>
+      ${state.currentUser.role==='Partner'?`<button class="btn btn-primary" onclick="newMatterModal()">+ New matter</button>`:''}
+    </div>
+    <div class="grid grid-3">${matters.length?matters.map(matterCard).join(''):`<div class="card">${emptyRow('No matters yet.')}${state.currentUser.role==='Partner'?`<button class="btn btn-primary" style="margin-top:10px;" onclick="newMatterModal()">+ Create your first matter</button>`:''}</div>`}</div>
+  `;
+}
+function newMatterModal(){
+  const team = DB.users.filter(u=>u.role!=='HR / Admin');
+  openModal('New matter', `
+    <div class="field"><label>Matter name</label><input type="text" id="nm-name" placeholder="e.g. Sharma Industries — Contract Dispute"></div>
+    <div class="field-row">
+      <div class="field"><label>Client</label><input type="text" id="nm-client" placeholder="Client name"></div>
+      <div class="field"><label>Practice area</label><input type="text" id="nm-practice" placeholder="e.g. Litigation"></div>
+    </div>
+    <div class="field-row">
+      <div class="field"><label>Risk</label><select id="nm-risk"><option>Low</option><option selected>Medium</option><option>High</option><option>Critical</option></select></div>
+      <div class="field"><label>Client sensitivity</label><select id="nm-sensitivity"><option>Low</option><option selected>Medium</option><option>High</option></select></div>
+    </div>
+    <div class="field"><label>Current position</label><textarea id="nm-position" placeholder="Where does this matter currently stand?"></textarea></div>
+    <div class="field-row">
+      <div class="field"><label>Next event (optional)</label><input type="text" id="nm-event-label" placeholder="e.g. High Court Hearing"></div>
+      <div class="field"><label>Event date (optional)</label><input type="date" id="nm-event-date"></div>
+    </div>
+    <div class="field"><label>Team on this matter</label>
+      <select id="nm-team" multiple style="min-height:80px;">${team.map(u=>`<option value="${u.id}">${u.name} — ${u.role}</option>`).join('') || ''}</select>
+      <div class="hint">${team.length?'Hold Ctrl/Cmd to select multiple.':'No team members yet — you can add them to this matter later.'}</div>
+    </div>
+  `, `<button class="btn btn-ghost" onclick="closeModal()">Cancel</button><button class="btn btn-primary" onclick="createMatter()">Create matter</button>`);
+}
+function createMatter(){
+  const name = document.getElementById('nm-name').value.trim();
+  const client = document.getElementById('nm-client').value.trim();
+  if(!name || !client){ toast('Matter name and client are required.'); return; }
+  const practiceArea = document.getElementById('nm-practice').value.trim() || 'General Practice';
+  const risk = document.getElementById('nm-risk').value;
+  const sensitivity = document.getElementById('nm-sensitivity').value;
+  const position = document.getElementById('nm-position').value.trim();
+  const eventLabel = document.getElementById('nm-event-label').value.trim();
+  const eventDate = document.getElementById('nm-event-date').value;
+  const team = [...document.getElementById('nm-team').selectedOptions].map(o=>o.value);
+  const id = 'm'+Math.random().toString(36).slice(2,7);
+  const number = 'MAT-'+Math.floor(1000+Math.random()*9000);
+  DB.matters.push({
+    id, number, name, client, practiceArea, partner: state.currentUser.id, team,
+    status:'Active', risk, sensitivity, currentPosition: position || 'No update recorded yet.',
+    nextEvent: eventLabel ? {label:eventLabel, date: eventDate?fmtDate(eventDate):'TBD'} : null,
+    hearingPrep: eventLabel ? 0 : null, decisions:[]
+  });
+  addMatterEvent(id, `${state.currentUser.name} opened this matter.`);
+  closeModal(); toast('Matter created.'); navigate('/matters/'+id);
+}
+function matterCard(m){
+  const openTasks = DB.tasks.filter(t=>t.matter===m.id && t.status!=='COMPLETED').length;
+  const critTasks = DB.tasks.filter(t=>t.matter===m.id && t.status!=='COMPLETED' && (t.risk==='Critical'||isOverdue(t))).length;
+  return `<div class="matter-card">
+    <div style="display:flex;justify-content:space-between;align-items:flex-start;">
+      <div>
+        <div style="font-family:var(--serif);font-size:16px;font-weight:500;">${m.name}</div>
+        <div class="row-sub">${m.practiceArea} · ${m.number}</div>
+      </div>
+      <span class="pill ${pillClass(m.risk)}">${m.risk} risk</span>
+    </div>
+    <div class="row-sub" style="margin:12px 0;">${escapeHtml(m.currentPosition)}</div>
+    ${m.nextEvent?`<div class="row-sub" style="margin-bottom:10px;"><b style="color:var(--text)">${m.nextEvent.label}</b> · ${m.nextEvent.date}</div>`:''}
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
+      <div class="row-sub">Open tasks <b style="color:var(--text)">${openTasks}</b>${critTasks?` · <span style="color:var(--critical)">${critTasks} critical</span>`:''}</div>
+      <div class="avatars-row">${m.team.map(u=>avatarHtml(u,24)).join('')}</div>
+    </div>
+    ${m.hearingPrep!==null?`<div class="progress-track" style="margin-bottom:14px;"><div class="progress-fill" style="width:${m.hearingPrep}%"></div></div>`:''}
+    <button class="btn btn-block" data-route="/matters/${m.id}">Open matter</button>
+  </div>`;
+}
+
+function viewMatterDetail(id){
+  const m = matterById(id);
+  if(!m){ view.innerHTML = emptyRow('Matter not available.'); return; }
+  if(!canAccessMatter(id)){ view.innerHTML = `<div class="card">${emptyRow("Matter unavailable. You aren't authorized to view this matter.")}</div>`; return; }
+  const tab = state._matterTab||'overview';
+  const tasks = DB.tasks.filter(t=>t.matter===id);
+  const events = DB.matterEvents.filter(e=>e.matter===id);
+  const docs = DB.documents.filter(d=>d.matter===id);
+  const handover = DB.handovers.find(h=>h.matter===id);
+  const openTasks = tasks.filter(t=>t.status!=='COMPLETED').length;
+  const critTasks = tasks.filter(t=>t.status!=='COMPLETED'&&(t.risk==='Critical'||isOverdue(t))).length;
+
+  const tabsHtml = `<div class="tabs">
+    ${['overview','tasks','timeline','documents','communications','handover'].map(k=>`<button class="tab-btn ${tab===k?'active':''}" onclick="setMatterTab('${k}')">${k.charAt(0).toUpperCase()+k.slice(1)}</button>`).join('')}
+  </div>`;
+
+  let body='';
+  if(tab==='overview'){
+    body = `
+      <div class="grid grid-3" style="margin-bottom:16px;">
+        <div class="card"><div class="card-title">Current position</div><div class="row-sub" style="margin-top:8px;">${escapeHtml(m.currentPosition)}</div></div>
+        <div class="card"><div class="card-title">Next event</div><div class="row-title" style="margin-top:8px;">${m.nextEvent?m.nextEvent.label:'—'}</div><div class="row-sub">${m.nextEvent?m.nextEvent.date:''}</div></div>
+        <div class="card"><div class="card-title">Open tasks</div><div class="card-stat" style="margin-top:6px;">${openTasks}</div><div class="card-stat-label">${critTasks} critical</div></div>
+      </div>
+      <div class="grid grid-2">
+        <div class="card">
+          <div class="card-head"><div class="card-title">${icon('spark')} AI matter memory</div><button class="btn btn-sm" onclick="renderMatterSummary('${id}')">Summarise matter</button></div>
+          <div id="ai-matter-summary">${m._aiSummary?matterSummaryHtml(m):`<div class="empty-state" style="padding:14px 2px;">Ask AI to organise decisions, risks and outstanding items for this matter.</div>`}</div>
+        </div>
+        <div class="card">
+          <div class="card-title" style="margin-bottom:10px;">Matter details</div>
+          <div class="kv"><div class="k">Client</div><div class="v">${m.client}</div></div>
+          <div class="kv"><div class="k">Responsible partner</div><div class="v">${userName(m.partner)}</div></div>
+          <div class="kv"><div class="k">Team</div><div class="v">${m.team.map(userName).join(', ')}</div></div>
+          <div class="kv"><div class="k">Status</div><div class="v">${m.status}</div></div>
+          <div class="kv"><div class="k">Client sensitivity</div><div class="v">${m.sensitivity}</div></div>
+        </div>
+      </div>`;
+  } else if(tab==='tasks'){
+    body = `<div class="card">${tasks.length?tasks.map(t=>`
+      <div class="list-row">
+        <div class="row-main">
+          <div class="row-title">${escapeHtml(t.title)}</div>
+          <div class="row-sub">${userName(t.assignee)} · Due ${fmtDate(t.deadline)} · ${statusLabel(t.status)}</div>
+        </div>
+        <span class="pill ${pillClass(t.priority)}">${t.priority}</span>
+        ${t.status==='AWAITING_REVIEW'?`<button class="btn btn-sm" onclick="openReviewModal('${t.id}')">Review</button>`:`<button class="btn btn-sm" onclick="openTaskModal('${t.id}')">View</button>`}
+      </div>`).join(''):emptyRow('No tasks on this matter yet.')}</div>`;
+  } else if(tab==='timeline'){
+    body = `<div class="card"><div class="timeline">${events.length?events.map(e=>`<div class="tl-item"><div class="tl-date">${fmtDate(e.date)}</div><div class="tl-text">${escapeHtml(e.text)}</div><div class="tl-note">${userName(e.user)}</div></div>`).join(''):emptyRow('No history recorded yet.')}</div></div>`;
+  } else if(tab==='documents'){
+    body = `<div class="card">${docs.length?docs.map(d=>`
+      <div class="list-row"><div class="row-main"><div class="row-title">${d.name}</div><div class="row-sub">${d.type} · uploaded by ${userName(d.uploadedBy)} · ${fmtDate(d.date)}</div></div><button class="btn btn-sm" onclick="viewDocUrl('${d.id}')">View doc link</button></div>`).join(''):emptyRow('No documents linked to this matter.')}</div>`;
+  } else if(tab==='communications'){
+    body = `<div class="card">${m.decisions.length?m.decisions.map(d=>`
+      <div class="ai-note"><b>${d.type}.</b> ${escapeHtml(d.text)}</div>`).join(''):emptyRow('No flagged communications for this matter.')}</div>`;
+  } else if(tab==='handover'){
+    if(handover){
+      body = `<div class="card">
+        <div class="kv"><div class="k">Outgoing</div><div class="v">${userName(handover.outgoing)}</div></div>
+        <div class="kv"><div class="k">Incoming</div><div class="v">${userName(handover.incoming)}</div></div>
+        <div class="kv"><div class="k">Status</div><div class="v"><span class="pill ${handover.status==='Official'?'pill-medium':'pill-high'}">${handover.status}</span></div></div>
+        <button class="btn" style="margin-top:14px;" data-route="/handovers/${handover.id}">Open handover</button>
+      </div>`;
+    } else {
+      body = `<div class="card">${emptyRow('No active handovers for this matter.')}<button class="btn btn-primary btn-block" data-route="/handovers">Start a handover</button></div>`;
+    }
+  }
+
+  view.innerHTML = `
+    <div class="breadcrumb" style="margin-bottom:6px;"><a href="#/matters" data-route="/matters">Matters</a> / ${m.name}</div>
+    <div class="page-head">
+      <div>
+        <div class="page-title">${m.name}</div>
+        <div class="page-sub">${m.client} · ${m.number}</div>
+      </div>
+      <div style="display:flex;gap:8px;">
+        <span class="pill ${pillClass(m.risk)}">${m.risk} risk</span>
+        <span class="pill pill-status">${m.status}</span>
+      </div>
+    </div>
+    ${tabsHtml}
+    <div id="matter-tab-body">${body}</div>
+  `;
+}
+function setMatterTab(k){ state._matterTab=k; render(); }
+function matterSummaryHtml(m){
+  return `<div class="ai-note"><b>Current position.</b> ${escapeHtml(m.currentPosition)}</div>
+    ${m.decisions.map(d=>`<div class="ai-note"><b>${d.type}.</b> ${escapeHtml(d.text)}</div>`).join('')}
+    <div class="hint">AI-generated — verify before relying on this summary.</div>`;
+}
+function renderMatterSummary(id){
+  const m = matterById(id); m._aiSummary = true;
+  document.getElementById('ai-matter-summary').innerHTML = matterSummaryHtml(m);
+  toast('Matter summarised by AI.');
+}
+function previewDoc(name){
+  // deprecated in favor of viewDocUrl(id) — kept as a safe fallback if ever called with a name
+  const d = DB.documents.find(x=>x.name===name);
+  if(d) return viewDocUrl(d.id);
+  openModal(name, `<div class="empty-state" style="padding:30px 10px;">Document link unavailable.</div>`, `<button class="btn btn-ghost" onclick="closeModal()">Close</button>`);
+}
+
+/* ---------- TASKS (board) ---------- */
+function viewTasks(){
+  const cols = ['NEW','ASSIGNED','IN_PROGRESS','AWAITING_REVIEW','COMPLETED'];
+  const isPartner = state.currentUser.role==='Partner';
+  const visible = isPartner? DB.tasks : DB.tasks.filter(t=>t.assignee===state.currentUser.id || t.createdBy===state.currentUser.id);
+  const canReviewTask = t => state.currentUser.role==='Partner' || t.createdBy===state.currentUser.id;
+  view.innerHTML = `
+    <div class="page-head">
+      <div><div class="page-title">Tasks</div><div class="page-sub">${visible.length} tasks ${isPartner?'across the firm':'involving you'} · drag a card to change its status</div></div>
+      ${canAssignWork(state.currentUser)?`<button class="btn btn-primary" data-route="/partner-access">+ New task</button>`:''}
+    </div>
+    <div class="board">
+      ${cols.map(c=>{
+        const items = visible.filter(t=>t.status===c);
+        return `<div class="board-col" data-status="${c}">
+          <div class="board-col-head"><span>${statusLabel(c)}</span><span>${items.length}</span></div>
+          ${items.map(t=>{
+            const review = c==='AWAITING_REVIEW' && canReviewTask(t);
+            return `<div class="task-chip" draggable="true" data-task-id="${t.id}">
+            <div style="display:flex;justify-content:space-between;margin-bottom:5px;"><span class="pill ${t.rejectionReason?'pill-critical':pillClass(t.priority)}" style="font-size:9.5px;">${t.rejectionReason?'Returned':t.priority}</span>${avatarHtml(t.assignee,20)}</div>
+            <div class="row-title">${escapeHtml(t.title)}</div>
+            <div class="row-sub">${matterById(t.matter).name}</div>
+            <div class="row-sub" style="margin-top:4px;${isOverdue(t)?'color:var(--critical);font-weight:700;':''}">Due ${fmtDate(t.deadline)}</div>
+            <button class="btn btn-sm" style="margin-top:8px;width:100%;" onclick="${review?`openReviewModal('${t.id}')`:`openTaskModal('${t.id}')`}">${review?'Review':'View'}</button>
+          </div>`;
+          }).join('') || `<div class="hint" style="padding:8px 2px;">No tasks — drop here</div>`}
+        </div>`;
+      }).join('')}
+    </div>
+  `;
+}
+function moveTaskStatus(taskId, newStatus){
+  const t = taskById(taskId);
+  if(!t || t.status===newStatus) return;
+  if(newStatus==='COMPLETED' && !(state.currentUser.role==='Partner' || t.createdBy===state.currentUser.id)){ toast('Only the person who assigned this task (or a partner) can mark it completed.'); return; }
+  if(state.currentUser.role!=='Partner' && t.assignee!==state.currentUser.id && t.createdBy!==state.currentUser.id){ toast("You can't move a task you're not part of."); return; }
+  const oldStatus = t.status;
+  t.status = newStatus;
+  if(newStatus==='COMPLETED'){
+    t.approvedAt='just now';
+    addMatterEvent(t.matter, `${state.currentUser.name} approved "${t.title}" from the task board.`);
+    addNotification(t.assignee,'Task completed', `"${t.title}" was approved by ${state.currentUser.name}.`);
+    if(t.assignee) markFirstTaskStep(t.assignee);
+  } else if(newStatus==='AWAITING_REVIEW'){
+    t.submittedAt='just now'; if(!t.note) t.note='Marked ready via the task board.'; if(!t.evidence||!t.evidence.length) t.evidence=[{name:'submitted_work.pdf'}];
+    addNotification(t.createdBy,'Task awaiting approval', `"${t.title}" was moved to awaiting review by ${state.currentUser.name}.`);
+  } else {
+    addNotification(t.assignee,'Task updated', `"${t.title}" moved to ${statusLabel(newStatus)}.`);
+  }
+  addMatterEvent(t.matter, `"${t.title}" moved from ${statusLabel(oldStatus)} to ${statusLabel(newStatus)}.`);
+  toast(`Moved to ${statusLabel(newStatus)}.`);
+  renderShell(); render();
+}
+document.addEventListener('dragstart', function(e){
+  const chip = e.target.closest('.task-chip');
+  if(chip){ e.dataTransfer.setData('text/plain', chip.dataset.taskId); e.dataTransfer.effectAllowed='move'; setTimeout(()=>chip.classList.add('dragging'),0); }
+});
+document.addEventListener('dragend', function(e){
+  const chip = e.target.closest('.task-chip');
+  if(chip) chip.classList.remove('dragging');
+  document.querySelectorAll('.board-col.drag-over').forEach(c=>c.classList.remove('drag-over'));
+});
+document.addEventListener('dragover', function(e){
+  const col = e.target.closest('.board-col');
+  if(col){ e.preventDefault(); e.dataTransfer.dropEffect='move'; col.classList.add('drag-over'); }
+});
+document.addEventListener('dragleave', function(e){
+  const col = e.target.closest('.board-col');
+  if(col && !col.contains(e.relatedTarget)) col.classList.remove('drag-over');
+});
+document.addEventListener('drop', function(e){
+  const col = e.target.closest('.board-col');
+  if(col){
+    e.preventDefault();
+    col.classList.remove('drag-over');
+    const taskId = e.dataTransfer.getData('text/plain');
+    if(taskId) moveTaskStatus(taskId, col.dataset.status);
+  }
+});
+
+/* ---------- ASSIGN WORK (task creation) ---------- */
+function viewPartnerAccess(){
+  const me = state.currentUser;
+  if(!canAssignWork(me)){ view.innerHTML = `<div class="card">${emptyRow('Assigning work is limited to partners, senior associates and associates.')}</div>`; return; }
+  const assignable = assignableUsersFor(me);
+  const prefill = state._prefillAssignee; state._prefillAssignee = null;
+
+  if(DB.matters.length===0){
+    view.innerHTML = `
+      <div class="page-head"><div><div class="page-title">Assign Work</div><div class="page-sub">Turn an instruction into a structured, delegated task.</div></div></div>
+      <div class="card">${emptyRow('Create a matter before you can assign work.')}<button class="btn btn-primary btn-block" style="margin-top:10px;" data-route="/matters">Go to Matters</button></div>
+    `;
+    return;
+  }
+  if(assignable.length===0){
+    view.innerHTML = `
+      <div class="page-head"><div><div class="page-title">Assign Work</div><div class="page-sub">Turn an instruction into a structured, delegated task.</div></div></div>
+      <div class="card">${emptyRow('No one below you in seniority is on the team yet.')}<button class="btn btn-primary btn-block" style="margin-top:10px;" data-route="/onboarding">Go to Onboarding</button></div>
+    `;
+    return;
+  }
+  view.innerHTML = `
+    <div class="page-head"><div><div class="page-title">Assign Work</div><div class="page-sub">Turn an instruction into a structured, delegated task.</div></div></div>
+    ${prefill?`<div class="ai-note" style="margin-bottom:16px;"><b>Assigning to ${userName(prefill)}.</b> Selected from Onboarding — adjust below if needed.</div>`:''}
+    <div class="grid grid-2">
+      <div class="card">
+        <div class="card-title" style="margin-bottom:10px;">Describe the instruction</div>
+        <div class="field"><label>Matter</label>
+          <select id="pa-matter">${DB.matters.map(m=>`<option value="${m.id}">${m.name}</option>`).join('')}</select>
+        </div>
+        <div class="field"><label>Instruction</label>
+          <textarea id="pa-instruction" placeholder="e.g. Review the client's email, check whether the requested documents are available and prepare a response by Wednesday."></textarea>
+        </div>
+        <div class="field"><label>Assign to</label>
+          <select id="pa-assignee">${assignable.map(u=>`<option value="${u.id}" ${prefill===u.id?'selected':''}>${u.name} — ${u.role}</option>`).join('')}</select>
+        </div>
+        <button class="btn btn-primary" onclick="interpretInstruction()">${icon('spark')} Interpret with AI</button>
+      </div>
+      <div class="card" id="pa-interpretation">
+        <div class="empty-state"><div class="big">Waiting on an instruction</div>AI will structure the task, extract a deadline and recommend priority and risk once you interpret it.</div>
+      </div>
+    </div>
+  `;
+}
+function interpretInstruction(){
+  const text = document.getElementById('pa-instruction').value.trim();
+  const matterId = document.getElementById('pa-matter').value;
+  const assignee = document.getElementById('pa-assignee').value;
+  if(!text){ toast('Add an instruction first.'); return; }
+  const m = matterById(matterId);
+  const dayMatch = text.match(/monday|tuesday|wednesday|thursday|friday|saturday|sunday/i);
+  const deadlineISO = dayMatch ? nextWeekdayISO(dayMatch[0]) : addDays(todayISO(),5);
+  const deadlineLabel = dayMatch ? `Next ${dayMatch[0][0].toUpperCase()+dayMatch[0].slice(1).toLowerCase()} (${fmtDate(deadlineISO)})` : `Within 5 business days (${fmtDate(deadlineISO)})`;
+  const sensitive = /client|settlement|hearing|court/i.test(text);
+  const priority = sensitive? 'High':'Medium';
+  const risk = m.sensitivity==='High'||sensitive?'High':'Medium';
+  const subtasks = [];
+  if(/review/i.test(text)) subtasks.push('Review relevant communication');
+  if(/document/i.test(text)) subtasks.push('Check requested documents');
+  if(/prepare|draft/i.test(text)) subtasks.push('Prepare draft response');
+  subtasks.push('Send draft to partner');
+  let title = text.split('.')[0].replace(/^review the|^prepare/i,'').trim();
+  if(!title) title = 'New task';
+  title = title.length>70 ? title.slice(0,70)+'…' : title;
+  const displayTitle = title.charAt(0).toUpperCase()+title.slice(1);
+  state._pendingTask = { matterId, assignee, text, deadlineISO, deadlineLabel, priority, risk, subtasks, title: displayTitle };
+  document.getElementById('pa-interpretation').innerHTML = `
+    <div class="card-title" style="margin-bottom:12px;">${icon('spark')} AI interpretation</div>
+    <div class="kv"><div class="k">Matter</div><div class="v">${m.name}</div></div>
+    <div class="kv"><div class="k">Task</div><div class="v">${escapeHtml(displayTitle)}</div></div>
+    <div class="kv"><div class="k">Assignee</div><div class="v">${userName(assignee)}</div></div>
+    <div class="kv"><div class="k">Deadline</div><div class="v">${deadlineLabel}</div></div>
+    <div class="kv"><div class="k">Priority</div><div class="v"><span class="pill ${pillClass(priority)}">${priority}</span></div></div>
+    <div class="kv"><div class="k">Risk</div><div class="v"><span class="pill ${pillClass(risk)}">${risk}</span></div></div>
+    <div style="margin-top:12px;">
+      <div class="card-title" style="margin-bottom:6px;">Subtasks</div>
+      ${subtasks.map(s=>`<div class="row-sub">• ${s}</div>`).join('')}
+    </div>
+    <div style="display:flex;gap:8px;margin-top:16px;">
+      <button class="btn" onclick="viewPartnerAccess()">Edit</button>
+      <button class="btn btn-primary" onclick="approveAndAssign()">Approve &amp; assign</button>
+    </div>
+  `;
+}
+function approveAndAssign(){
+  const p = state._pendingTask;
+  const id = 't'+Math.random().toString(36).slice(2,7);
+  DB.tasks.push({
+    id, matter:p.matterId, title:p.title, desc:p.text, instruction:p.text,
+    createdBy: state.currentUser.id, assignee:p.assignee, priority:p.priority, priorityScore: p.priority==='High'?70:45,
+    risk:p.risk, sensitivity:p.risk, deadline:p.deadlineISO, status:'ASSIGNED', evidence:[], note:'', subtasks:p.subtasks, createdAt:todayISO()
+  });
+  addNotification(p.assignee,'Task assigned', `You were assigned "${p.title}" by ${state.currentUser.name}.`);
+  addMatterEvent(p.matterId, `${state.currentUser.name} assigned "${p.title}" to ${userName(p.assignee)}.`);
+  markFirstTaskStep(p.assignee);
+  toast('Task created and assigned.'); navigate('/tasks');
+}
+
+/* ---------- HANDOVERS ---------- */
+function viewHandovers(){
+  view.innerHTML = `
+    <div class="page-head">
+      <div><div class="page-title">Handovers</div><div class="page-sub">Keep matters moving when people change.</div></div>
+      <button class="btn btn-primary" onclick="startHandoverModal()">+ Start handover</button>
+    </div>
+    <div class="grid grid-3">
+      ${DB.handovers.map(h=>{
+        const m=matterById(h.matter);
+        return `<div class="card">
+          <div style="display:flex;justify-content:space-between;"><div class="card-title">${m.name}</div><span class="pill ${h.status==='Official'?'pill-medium':'pill-high'}">${h.status}</span></div>
+          <div class="row-sub" style="margin:10px 0;">${userName(h.outgoing)} → ${userName(h.incoming)}</div>
+          <button class="btn btn-block" data-route="/handovers/${h.id}">Open</button>
+        </div>`;
+      }).join('') || emptyRow('No active handovers.')}
+    </div>
+  `;
+}
+function startHandoverModal(){
+  if(DB.matters.length===0){ toast('Create a matter first.'); return; }
+  if(DB.users.length<2){ toast('Add at least two team members before starting a handover.'); return; }
+  openModal('Start a handover', `
+    <div class="field"><label>Matter</label><select id="ho-matter">${DB.matters.map(m=>`<option value="${m.id}">${m.name}</option>`).join('')}</select></div>
+    <div class="field"><label>Outgoing</label><select id="ho-out">${DB.users.map(u=>`<option value="${u.id}">${u.name}</option>`).join('')}</select></div>
+    <div class="field"><label>Incoming</label><select id="ho-in">${DB.users.map(u=>`<option value="${u.id}">${u.name}</option>`).join('')}</select></div>
+  `, `<button class="btn btn-ghost" onclick="closeModal()">Cancel</button><button class="btn btn-primary" onclick="createHandover()">Create draft</button>`);
+}
+function createHandover(){
+  const id='h'+Math.random().toString(36).slice(2,7);
+  const matter=document.getElementById('ho-matter').value, outgoing=document.getElementById('ho-out').value, incoming=document.getElementById('ho-in').value;
+  DB.handovers.push({id, matter, outgoing, incoming, status:'Draft', createdAt:todayISO(), ai:null});
+  addNotification(state.currentUser.id,'Handover requested', `Handover draft created for ${matterById(matter).name}.`);
+  closeModal(); navigate('/handovers/'+id);
+}
+function viewHandoverDetail(id){
+  const h = DB.handovers.find(x=>x.id===id);
+  if(!h){ view.innerHTML=emptyRow('Handover not found.'); return; }
+  const m = matterById(h.matter);
+  const tasks = DB.tasks.filter(t=>t.matter===h.matter && t.status!=='COMPLETED');
+  view.innerHTML = `
+    <div class="breadcrumb" style="margin-bottom:6px;"><a href="#/handovers" data-route="/handovers">Handovers</a> / ${m.name}</div>
+    <div class="page-head">
+      <div><div class="page-title">Matter handover — ${m.name}</div><div class="page-sub">${userName(h.outgoing)} → ${userName(h.incoming)}</div></div>
+      <span class="pill ${h.status==='Official'?'pill-medium':'pill-high'}">${h.status}</span>
+    </div>
+    <div class="card">
+      <div class="card-head"><div class="card-title">${icon('spark')} AI-generated handover</div>${!h.ai?`<button class="btn btn-primary btn-sm" onclick="generateHandover('${id}')">Generate AI handover</button>`:''}</div>
+      <div id="handover-body">${h.ai? handoverBodyHtml(h,m,tasks) : emptyRow('Generate a structured handover summarising position, outstanding work and risks.')}</div>
+    </div>
+    ${h.ai?`<div style="display:flex;gap:8px;margin-top:16px;">
+      <button class="btn" onclick="toast('Edit mode is not enabled in this prototype.')">Edit</button>
+      ${h.status==='Draft'?`<button class="btn btn-primary" onclick="approveHandover('${id}')">Approve handover</button>`:''}
+    </div>`:''}
+  `;
+}
+function generateHandover(id){
+  const h = DB.handovers.find(x=>x.id===id); h.ai = true;
+  document.getElementById('handover-body').innerHTML = handoverBodyHtml(h, matterById(h.matter), DB.tasks.filter(t=>t.matter===h.matter && t.status!=='COMPLETED'));
+  addMatterEvent(h.matter, `AI handover draft generated for ${userName(h.incoming)}.`);
+  toast('Handover generated.');
+}
+function handoverBodyHtml(h,m,tasks){
+  return `
+    <div class="ai-note"><b>Matter overview.</b> ${m.name} (${m.number}), ${m.practiceArea} matter for ${m.client}, currently ${m.status.toLowerCase()}.</div>
+    <div class="ai-note"><b>Current position.</b> ${escapeHtml(m.currentPosition)}</div>
+    <div class="ai-note"><b>Outstanding tasks.</b> ${tasks.length} open task(s): ${tasks.map(t=>t.title).join('; ')||'none'}.</div>
+    <div class="ai-note"><b>Upcoming deadlines.</b> ${m.nextEvent?`${m.nextEvent.label} on ${m.nextEvent.date}`:'None scheduled.'}</div>
+    ${m.decisions.map(d=>`<div class="ai-note"><b>${d.type}.</b> ${escapeHtml(d.text)}</div>`).join('')}
+    <div class="ai-note"><b>Recommended next actions.</b> Confirm outstanding task ownership with ${userName(h.incoming)} and review client sensitivity notes before any client communication.</div>
+    <div class="hint">AI-generated — review before treating as the official record.</div>
+  `;
+}
+function approveHandover(id){
+  const h = DB.handovers.find(x=>x.id===id); h.status='Official';
+  addNotification(h.incoming,'Handover approved', `Handover for ${matterById(h.matter).name} is now official.`);
+  addMatterEvent(h.matter, `Handover approved — matter now owned by ${userName(h.incoming)}.`);
+  toast('Handover approved and marked official.'); render();
+}
+
+/* ---------- ONBOARDING ---------- */
+function viewOnboarding(){
+  const isHR = state.currentUser.role==='HR / Admin';
+  const isPartner = state.currentUser.role==='Partner';
+  if(isHR || isPartner){
+    const avgCompletion = DB.onboarding.length ? Math.round(DB.onboarding.reduce((a,o)=>a+o.progress,0)/DB.onboarding.length) : 0;
+    view.innerHTML = `
+      <div class="page-head">
+        <div><div class="page-title">Onboarding</div><div class="page-sub">${DB.onboarding.length} employee(s) onboarding</div></div>
+        <button class="btn btn-primary" onclick="startOnboardingModal()">+ Start onboarding</button>
+      </div>
+      <div class="grid grid-3" style="margin-bottom:20px;">
+        <div class="card"><div class="card-title">Average completion</div><div class="card-stat">${avgCompletion}%</div></div>
+        <div class="card"><div class="card-title">Worksheets submitted</div><div class="card-stat">${DB.worksheets.length}</div></div>
+        <div class="card"><div class="card-title">Pending team access</div><div class="card-stat">${DB.onboarding.filter(o=>!o.teamAccess).length}</div></div>
+      </div>
+      ${DB.onboarding.length?DB.onboarding.map(o=>onboardingCard(o)).join(''):`<div class="card">${emptyRow('No one is onboarding right now.')}</div>`}
+      <div class="card" style="margin-top:16px;">
+        <div class="card-title" style="margin-bottom:10px;">Worksheet records</div>
+        ${DB.worksheets.length?DB.worksheets.map(w=>`<div class="list-row"><div class="row-main"><div class="row-title">${userName(w.user)}</div><div class="row-sub">${matterById(w.matter)?matterById(w.matter).name:''} · ${taskById(w.task)?.title||''}</div></div><span class="row-time">${fmtDate(w.date)}</span><span class="pill pill-status">${w.status}</span></div>`).join(''):emptyRow('No worksheets submitted yet.')}
+      </div>
+    `;
+    return;
+  }
+  const mine = DB.onboarding.find(o=>o.user===state.currentUser.id);
+  view.innerHTML = `<div class="page-head"><div><div class="page-title">Onboarding</div><div class="page-sub">Your onboarding journey</div></div></div>
+    ${mine? onboardingCard(mine, true) : `<div class="card">${emptyRow('No active onboarding for your account.')}</div>`}`;
+}
+function startOnboardingModal(){
+  openModal('Start onboarding', `
+    <div class="field"><label>Full name</label><input type="text" id="so-name" placeholder="New hire's full name"></div>
+    <div class="field-row">
+      <div class="field"><label>Level</label>
+        <select id="so-role"><option>Senior Associate</option><option>Associate</option><option>Junior / Intern</option></select>
+      </div>
+      <div class="field"><label>Practice area / department</label><input type="text" id="so-dept" placeholder="e.g. Litigation"></div>
+    </div>
+    <div class="hint">This creates an onboarding checklist. They won't be able to sign in or be assigned work until you click "Add to team."</div>
+  `, `<button class="btn btn-ghost" onclick="closeModal()">Cancel</button><button class="btn btn-primary" onclick="createOnboarding()">Start onboarding</button>`);
+}
+function createOnboarding(){
+  const name = document.getElementById('so-name').value.trim();
+  if(!name){ toast("Enter the new hire's name."); return; }
+  const role = document.getElementById('so-role').value;
+  const dept = document.getElementById('so-dept').value.trim() || 'General Practice';
+  const id = 'o'+Math.random().toString(36).slice(2,7);
+  DB.onboarding.push({ id, user:null, pending:{name, role, dept}, teamAccess:false, progress:0, steps: defaultOnboardingSteps() });
+  closeModal(); toast(`Onboarding started for ${name}.`); render();
+}
+function onboardingPerson(o){
+  if(o.user){ const u = DB.users.find(x=>x.id===o.user); return {id:o.user, name:u.name, role:u.role, dept:u.dept}; }
+  return {id:null, name:o.pending.name, role:o.pending.role, dept:o.pending.dept};
+}
+function onboardingCard(o, self){
+  const p = onboardingPerson(o);
+  const isPartner = state.currentUser.role==='Partner';
+  const av = o.user ? avatarHtml(o.user,32) : `<div class="avatar" style="background:${colorFor(p.name)};width:32px;height:32px;font-size:11.5px;">${initials(p.name)}</div>`;
+  return `<div class="card" style="margin-bottom:14px;">
+    <div class="card-head">
+      <div style="display:flex;align-items:center;gap:10px;">${av}<div><div class="row-title">${p.name}</div><div class="row-sub">${roleDept(p)}</div></div></div>
+      <div style="text-align:right;"><div class="card-stat" style="font-size:22px;">${o.progress}%</div><div class="row-sub">complete</div></div>
+    </div>
+    <div class="progress-track" style="margin-bottom:14px;"><div class="progress-fill" style="width:${o.progress}%"></div></div>
+    ${o.steps.map(s=>`<div class="step-item">
+      <button class="step-check ${s.done?'done':''}" onclick="toggleStep('${o.id}','${s.id}')">${s.done?'✓':''}</button>
+      <div><div class="row-title step-title ${s.done?'done':''}" style="font-size:13px;">${s.title}</div><div class="row-sub">${s.day}</div></div>
+    </div>`).join('')}
+    ${!self?`<div style="display:flex;gap:8px;margin-top:14px;padding-top:14px;border-top:1px solid var(--border-soft);align-items:center;">
+      <span class="pill pill-high">Not yet on the team</span><button class="btn btn-sm btn-primary" ${isPartner?'':'disabled title="Only a partner can add someone to the team."'} onclick="addToTeam('${o.id}')">Add to team</button>
+    </div>`:''}
+  </div>`;
+}
+function toggleStep(oid, sid){
+  const o = DB.onboarding.find(x=>x.id===oid); const s = o.steps.find(x=>x.id===sid);
+  s.done = !s.done;
+  o.progress = Math.round((o.steps.filter(x=>x.done).length/o.steps.length)*100);
+  render();
+}
+function addToTeam(oid){
+  if(state.currentUser.role!=='Partner'){ toast('Only a partner can add someone to the team.'); return; }
+  const o = DB.onboarding.find(x=>x.id===oid);
+  if(!o || o.teamAccess) return;
+  const id = 'u_'+o.pending.name.split(' ')[0].toLowerCase()+Math.random().toString(36).slice(2,4);
+  const newUser = {id, name:o.pending.name, role:o.pending.role, dept:o.pending.dept, access:true};
+  if(o.requestEmail){ newUser.email = o.requestEmail; }
+  DB.users.push(newUser);
+  if(o.requestEmail && accounts[o.requestEmail]){ accounts[o.requestEmail].userId = id; }
+  DB.users.filter(u=>u.role==='HR / Admin').forEach(hr=>{
+    if(hr.id!==state.currentUser.id) addNotification(hr.id,'Onboarding update', `${o.pending.name} was added to the team by ${state.currentUser.name} and can now sign in.`);
+  });
+  toast(`${o.pending.name} added to the team — they can now sign in to PartnerWork.`);
+  DB.onboarding = DB.onboarding.filter(x=>x.id!==oid);
+  render();
+}
+function markFirstTaskStep(userId){
+  const o = DB.onboarding.find(x=>x.user===userId);
+  if(!o) return;
+  const step = o.steps.find(s=>/first workflow task/i.test(s.title));
+  if(step && !step.done){
+    step.done = true;
+    o.progress = Math.round((o.steps.filter(x=>x.done).length/o.steps.length)*100);
+  }
+}
+
+/* ---------- TEAM ---------- */
+const CAPACITY = 6; // active tasks considered "full bandwidth"
+function viewTeam(){
+  const members = DB.users.filter(u=>!['Partner','HR / Admin'].includes(u.role) && u.access!==false);
+  view.innerHTML = `
+    <div class="page-head"><div><div class="page-title">Team</div><div class="page-sub">Workload and bandwidth across the firm</div></div></div>
+    <div class="card">
+      ${members.map(u=>{
+        const tasks = DB.tasks.filter(t=>t.assignee===u.id && t.status!=='COMPLETED');
+        const critical = tasks.filter(t=>t.priority==='Critical').length;
+        const overdue = tasks.filter(isOverdue).length;
+        const label = workloadLabel(tasks.length);
+        const pct = Math.min(100, Math.round((tasks.length/CAPACITY)*100));
+        const barColor = pct>=100?'var(--critical)':pct>=66?'var(--high)':'var(--accent)';
+        const bandwidth = pct>=100 ? 'No bandwidth for more work' : pct>=66 ? 'Limited bandwidth' : 'Has bandwidth for more work';
+        return `<div class="list-row" style="align-items:flex-start;">
+          <div style="display:flex;align-items:center;gap:10px;flex:1;min-width:0;">
+            ${avatarHtml(u.id,34)}
+            <div class="row-main">
+              <div class="row-title">${u.name}</div>
+              <div class="row-sub">${roleDept(u)}</div>
+            </div>
+          </div>
+          <div style="width:220px;flex-shrink:0;">
+            <div style="display:flex;justify-content:space-between;margin-bottom:4px;"><span class="row-sub">${tasks.length}/${CAPACITY} capacity</span><span class="row-sub">${critical} critical · ${overdue} overdue</span></div>
+            <div class="progress-track"><div class="progress-fill" style="width:${pct}%;background:${barColor};"></div></div>
+            <div class="row-sub" style="margin-top:4px;color:${pct>=100?'var(--critical)':'var(--text-2)'};">${bandwidth}</div>
+          </div>
+          <span class="pill ${workloadPill(label)}" style="margin-left:14px;">${label}</span>
+        </div>`;
+      }).join('') || emptyRow('No team members on the roster yet.')}
+    </div>
+  `;
+}
+
+/* ---------- DOCUMENTS ---------- */
+function viewDocuments(){
+  const matterIds = accessibleMatters().map(m=>m.id);
+  const docs = DB.documents.filter(d=>matterIds.includes(d.matter));
+  view.innerHTML = `
+    <div class="page-head">
+      <div><div class="page-title">Documents</div><div class="page-sub">${docs.length} documents you're authorized to view</div></div>
+      ${DB.matters.length?`<button class="btn btn-primary" onclick="addDocumentModal()">+ Add document</button>`:''}
+    </div>
+    <div class="card">
+      ${docs.length?docs.map(d=>`<div class="list-row">
+        <div class="row-main"><div class="row-title">${d.name}</div><div class="row-sub">${matterById(d.matter).name} · ${d.type}</div></div>
+        <div class="row-sub">${userName(d.uploadedBy)}</div>
+        <span class="row-time">${fmtDate(d.date)}</span>
+        <button class="btn btn-sm" onclick="viewDocUrl('${d.id}')">View doc link</button>
+      </div>`).join(''):emptyRow('No documents are available to you yet.')}
+    </div>
+  `;
+}
+function addDocumentModal(){
+  const matters = accessibleMatters();
+  if(matters.length===0){ toast('Create or join a matter first.'); return; }
+  openModal('Add document', `
+    <div class="field"><label>Matter</label><select id="ad-matter">${matters.map(m=>`<option value="${m.id}">${m.name}</option>`).join('')}</select></div>
+    <div class="field"><label>Title</label><input type="text" id="ad-title" placeholder="e.g. Draft settlement agreement"></div>
+    <div class="field"><label>Type</label><input type="text" id="ad-type" placeholder="e.g. Contract, Pleading, Evidence" value="Document"></div>
+    <div class="field"><label>Document URL</label><input type="text" id="ad-url" placeholder="https://..."></div>
+  `, `<button class="btn btn-ghost" onclick="closeModal()">Cancel</button><button class="btn btn-primary" onclick="submitAddDocument()">Add document</button>`);
+}
+function submitAddDocument(){
+  const matter = document.getElementById('ad-matter').value;
+  const title = document.getElementById('ad-title').value.trim();
+  const type = document.getElementById('ad-type').value.trim() || 'Document';
+  const url = document.getElementById('ad-url').value.trim();
+  if(!title || !url){ toast('Add a title and a URL.'); return; }
+  saveToDocuments(matter, title, url, type);
+  closeModal(); toast('Document added.'); render();
+}
+function viewDocUrl(id){
+  const d = DB.documents.find(x=>x.id===id);
+  openModal(d.name, `
+    <div class="kv"><div class="k">Matter</div><div class="v">${matterById(d.matter).name}</div></div>
+    <div class="kv"><div class="k">Type</div><div class="v">${d.type}</div></div>
+    <div class="kv"><div class="k">Uploaded by</div><div class="v">${userName(d.uploadedBy)} · ${fmtDate(d.date)}</div></div>
+    <div class="field" style="margin-top:14px;"><label>Document URL</label>
+      <input type="text" id="doc-url-field" value="${d.url}" readonly style="font-family:var(--mono);font-size:11.5px;">
+    </div>
+    <div class="hint">Opens the file in Word Online / your firm's document store.</div>
+  `, `<button class="btn" onclick="copyDocUrl()">Copy link</button><a class="btn btn-primary" href="${d.url}" target="_blank" rel="noopener">Open document</a>`);
+}
+function copyDocUrl(){
+  const field = document.getElementById('doc-url-field');
+  field.select();
+  if(navigator.clipboard){ navigator.clipboard.writeText(field.value).then(()=>toast('Link copied.')).catch(()=>toast('Could not copy — select and copy manually.')); }
+  else toast('Link selected — copy with Ctrl/Cmd+C.');
+}
+
+/* ---------- NOTIFICATIONS ---------- */
+function viewNotifications(){
+  const mine = DB.notifications.filter(n=>n.user===state.currentUser.id);
+  view.innerHTML = `
+    <div class="page-head">
+      <div><div class="page-title">Notifications</div><div class="page-sub">${mine.filter(n=>!n.read).length} unread</div></div>
+      <button class="btn" onclick="markAllRead()">Mark all as read</button>
+    </div>
+    <div class="card">
+      ${mine.length? mine.map(n=>`<div class="list-row" style="${n.read?'':'background:var(--accent-soft);border-radius:8px;padding-left:8px;padding-right:8px;'}">
+        <label style="display:flex;align-items:flex-start;gap:10px;cursor:pointer;flex:1;min-width:0;">
+          <input type="checkbox" ${n.read?'checked':''} onchange="toggleNotificationRead('${n.id}', this.checked)" style="margin-top:3px;width:15px;height:15px;accent-color:var(--accent);flex-shrink:0;">
+          <div class="row-main"><div class="row-title">${n.type}</div><div class="row-sub">${escapeHtml(n.text)}</div></div>
+        </label>
+        <span class="row-time">${n.time}</span>
+      </div>`).join('') : emptyRow('No notifications yet.')}
+    </div>
+  `;
+}
+function toggleNotificationRead(id, checked){
+  const n = DB.notifications.find(x=>x.id===id);
+  if(n) n.read = checked;
+  renderShell(); render();
+}
+function markAllRead(){
+  DB.notifications.filter(n=>n.user===state.currentUser.id).forEach(n=>n.read=true);
+  renderShell(); render(); toast('All caught up.');
+}
+
+/* ---------- SETTINGS ---------- */
+function viewSettings(){
+  const u = state.currentUser;
+  view.innerHTML = `
+    <div class="page-head"><div><div class="page-title">Settings</div><div class="page-sub">Account and preferences</div></div></div>
+    <div class="card" style="max-width:480px;">
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px;">${avatarHtml(u.id,48)}<div><div class="row-title" style="font-size:15px;">${u.name}</div><div class="row-sub">${roleDept(u)}</div></div></div>
+      <div class="kv"><div class="k">Email notifications</div><div class="v">On</div></div>
+      <div class="kv"><div class="k">Platform notifications</div><div class="v">On</div></div>
+      <div class="kv"><div class="k">Two-factor authentication</div><div class="v">Enabled</div></div>
+    </div>
+  `;
+}
+
+/* =====================================================================
+   GLOBAL SEARCH
+===================================================================== */
+document.getElementById('global-search').addEventListener('input', function(){
+  const q = this.value.trim().toLowerCase();
+  const box = document.getElementById('search-results');
+  if(!q){ box.classList.remove('show'); return; }
+  const matterIds = accessibleMatters().map(m=>m.id);
+  const matters = accessibleMatters().filter(m=>m.name.toLowerCase().includes(q)||m.client.toLowerCase().includes(q)).slice(0,4);
+  const isPartner = state.currentUser.role==='Partner';
+  const taskPool = isPartner ? DB.tasks : DB.tasks.filter(t=>matterIds.includes(t.matter) && (t.assignee===state.currentUser.id||t.createdBy===state.currentUser.id));
+  const tasks = taskPool.filter(t=>t.title.toLowerCase().includes(q)).slice(0,4);
+  const people = (isPartner? DB.users : DB.users.filter(u=>u.role==='Partner')).filter(u=>u.name.toLowerCase().includes(q)).slice(0,4);
+  let html='';
+  if(matters.length) html += `<div class="sr-group-label">Matters</div>` + matters.map(m=>`<div class="sr-item" data-route="/matters/${m.id}"><div class="t">${m.name}</div><div class="s">${m.client}</div></div>`).join('');
+  if(tasks.length) html += `<div class="sr-group-label">Tasks</div>` + tasks.map(t=>`<div class="sr-item" data-route="/tasks"><div class="t">${t.title}</div><div class="s">${matterById(t.matter).name}</div></div>`).join('');
+  if(people.length) html += `<div class="sr-group-label">People</div>` + people.map(p=>`<div class="sr-item" data-route="/team"><div class="t">${p.name}</div><div class="s">${p.role}</div></div>`).join('');
+  box.innerHTML = html || `<div class="sr-item"><div class="s">No results for "${escapeHtml(q)}"</div></div>`;
+  box.classList.add('show');
+});
+document.addEventListener('click', function(e){
+  if(!e.target.closest('.search-wrap')) document.getElementById('search-results').classList.remove('show');
+});
+
+/* =====================================================================
+   GLOBAL CLICK ROUTER (data-route delegation)
+===================================================================== */
+document.addEventListener('click', function(e){
+  const el = e.target.closest('[data-route]');
+  if(el){
+    e.preventDefault();
+    document.getElementById('search-results').classList.remove('show');
+    navigate(el.getAttribute('data-route'));
+  }
+});
+document.getElementById('bell-btn').addEventListener('click', ()=>navigate('/notifications'));
+document.getElementById('switch-user').addEventListener('click', (e)=>{ e.preventDefault(); logout(); });
+
+/* =====================================================================
+   AUTH FLOW — track select + work email / password
+   (No backend: this is a demo workspace.
+   - Partner & HR/Admin accounts are created immediately.
+   - Associate & Intern accounts must pick a partner; that partner
+     gets a notification + an Onboarding entry and must "Add to team"
+     before the person can sign in.
+   - Signing in again with the same email + password re-enters the
+     same account (via the Sign in screen).)
+===================================================================== */
+const roleColor = {Partner:'#1F5A46', 'Senior Associate':'#9C7A29', Associate:'#3B5C7A', 'Junior / Intern':'#7A4B3A', 'HR / Admin':'#6B4F8C'};
+const accounts = {}; // email -> {name, password, userId, track, pendingOnboardingId}
+let authTrack = null;
+
+function hideAllAuthSteps(){
+  ['step-landing','step-auth','step-pending','step-signin'].forEach(id=>document.getElementById(id).style.display='none');
+}
+function showLanding(){
+  hideAllAuthSteps();
+  document.getElementById('step-landing').style.display='block';
+  document.getElementById('auth-form').reset();
+  document.getElementById('signin-form').reset();
+  document.getElementById('auth-practice-other').style.display='none';
+  clearAuthErrors();
+}
+function showSignIn(){
+  hideAllAuthSteps();
+  document.getElementById('step-signin').style.display='block';
+  document.getElementById('signin-alert').classList.remove('show');
+  document.getElementById('si-email').focus();
+}
+function showAuth(track){
+  authTrack = track;
+  hideAllAuthSteps();
+  document.getElementById('step-auth').style.display='block';
+  const badge = document.getElementById('auth-track-badge');
+  const levelField = document.getElementById('level-field');
+  const practiceField = document.getElementById('practice-field');
+  const partnerField = document.getElementById('partner-field');
+  clearAuthErrors();
+  if(track==='partner'){
+    badge.textContent='Partner login'; levelField.style.display='none'; practiceField.style.display='block'; partnerField.style.display='none';
+  } else if(track==='hr'){
+    badge.textContent='HR / Admin login'; levelField.style.display='none'; practiceField.style.display='none'; partnerField.style.display='none';
+  } else {
+    badge.textContent='Associate & intern login'; levelField.style.display='block'; practiceField.style.display='block'; partnerField.style.display='block';
+    const partners = DB.users.filter(u=>u.role==='Partner');
+    const sel = document.getElementById('auth-partner');
+    const submitBtn = document.getElementById('auth-submit-btn');
+    if(partners.length===0){
+      sel.innerHTML = `<option value="">No partners have signed in yet</option>`;
+      submitBtn.disabled = true;
+      document.getElementById('partner-hint').textContent = 'No partners have signed in yet — ask a partner to create an account first, then come back and select them here.';
+    } else {
+      sel.innerHTML = partners.map(p=>`<option value="${p.id}">${p.name}</option>`).join('');
+      submitBtn.disabled = false;
+      document.getElementById('partner-hint').textContent = 'Your request will be sent to this partner for approval before you can sign in.';
+    }
+  }
+  document.getElementById('auth-name').focus();
+}
+function clearAuthErrors(){
+  document.getElementById('auth-alert').classList.remove('show');
+  ['err-name','err-email','err-pass','err-pass2'].forEach(id=>document.getElementById(id).classList.remove('show'));
+  ['auth-name','auth-email','auth-pass','auth-pass2'].forEach(id=>document.getElementById(id).classList.remove('field-error'));
+}
+function markError(fieldId, errId){
+  document.getElementById(fieldId).classList.add('field-error');
+  document.getElementById(errId).classList.add('show');
+}
+function practiceAreaValue(){
+  const sel = document.getElementById('auth-practice');
+  if(!sel || document.getElementById('practice-field').style.display==='none') return '';
+  if(sel.value==='other') return document.getElementById('auth-practice-other').value.trim();
+  return sel.value;
+}
+function submitAuth(e){
+  e.preventDefault();
+  clearAuthErrors();
+  const name = document.getElementById('auth-name').value.trim();
+  const email = document.getElementById('auth-email').value.trim();
+  const pass = document.getElementById('auth-pass').value;
+  const pass2 = document.getElementById('auth-pass2').value;
+  let ok = true;
+  if(!name){ markError('auth-name','err-name'); ok=false; }
+  const emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email);
+  if(!emailOk){ markError('auth-email','err-email'); ok=false; }
+  if(pass.length<6){ markError('auth-pass','err-pass'); ok=false; }
+  if(pass2!==pass || !pass2){ markError('auth-pass2','err-pass2'); ok=false; }
+  if(!ok) return false;
+
+  if(accounts[email]){
+    document.getElementById('auth-alert').textContent = 'An account already exists for this email. Use Sign in instead.';
+    document.getElementById('auth-alert').classList.add('show');
+    return false;
+  }
+
+  const practice = practiceAreaValue();
+
+  if(authTrack==='associate'){
+    const partnerId = document.getElementById('auth-partner').value;
+    if(!partnerId){ toast('Select a partner to send your request to.'); return false; }
+    const role = document.getElementById('auth-level').value;
+    const oid = 'o'+Math.random().toString(36).slice(2,7);
+    DB.onboarding.push({ id:oid, user:null, pending:{name, role, dept:practice}, teamAccess:false, progress:0, steps: defaultOnboardingSteps(), requestEmail:email });
+    accounts[email] = {name, password:pass, track:authTrack, userId:null, pendingOnboardingId:oid};
+    addNotification(partnerId, 'Approval needed', `${name} has requested to join as ${role} (${practice || 'no practice area set'}). Review in Onboarding to add them to the team.`);
+    hideAllAuthSteps();
+    document.getElementById('pending-text').textContent = `Your request to join as ${role} has been sent to ${userName(partnerId)}. You'll be able to sign in with this email and password once they add you to the team.`;
+    document.getElementById('step-pending').style.display='block';
+    return false;
+  }
+
+  // Partner / HR — created immediately, no approval needed
+  const role = authTrack==='partner' ? 'Partner' : 'HR / Admin';
+  const personaId = 'u_'+Math.random().toString(36).slice(2,8);
+  DB.users.push({id:personaId, name, email, role, dept:practice||'', access:true});
+  accounts[email] = {name, password:pass, track:authTrack, userId:personaId};
+  login(personaId);
+  return false;
+}
+function submitSignIn(e){
+  e.preventDefault();
+  const email = document.getElementById('si-email').value.trim();
+  const pass = document.getElementById('si-pass').value;
+  const alertEl = document.getElementById('signin-alert');
+  alertEl.classList.remove('show');
+  const acc = accounts[email];
+  if(!acc || acc.password!==pass){
+    alertEl.textContent = 'No matching account, or the password is incorrect.';
+    alertEl.classList.add('show');
+    return false;
+  }
+  if(acc.userId){
+    const persona = DB.users.find(u=>u.id===acc.userId);
+    if(persona && persona.access!==false){ login(acc.userId); return false; }
+  }
+  if(acc.pendingOnboardingId){
+    const ob = DB.onboarding.find(o=>o.id===acc.pendingOnboardingId);
+    if(ob && ob.teamAccess && ob.user){
+      acc.userId = ob.user;
+      login(ob.user);
+      return false;
+    }
+  }
+  alertEl.textContent = "Your request is still awaiting partner approval. Try again once you've been added to the team.";
+  alertEl.classList.add('show');
+  return false;
+}
+</script>
+</body>
+</html>
